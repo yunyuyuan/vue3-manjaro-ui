@@ -1,21 +1,27 @@
 <template>
   <div class="window"
        :style="{
-          transform: `translate(${position[0]}px, ${position[1]}px)`,
+          transform: `translate(${app.maxed.value?0:app.position[0]}px, ${app.maxed.value?0:app.position[1]}px) scale(${scale})`,
           cursor: calcCursor,
-          width: size[0]+'px',
-          height: size[1]+'px',
+          width: app.size[0]+'px',
+          height: app.size[1]+'px',
+          zIndex: app.zindex.value,
         }"
+       :class="{top: topWindow === app, maxed: app.maxed.value}"
        @mousemove.self="checkResize"
        @mouseleave.self="noResize"
        @mousedown="startResize"
   >
-    <div class="head flex" :class="{moving: moving}" @mousedown.self="startMove">
-      <a class="icon flex"><svg-icon :name="icon"/></a>
-      <span @mousedown.self="startMove">{{appName}}</span>
-      <i class="minimize"><svg-icon name="arrow"/></i>
-      <i class="maximize"><svg-icon name="arrow"/></i>
-      <i class="close"><svg-icon name="close"/></i>
+    <div class="head flex"
+         :class="{moving: moving}"
+         :data-text="app.name"
+         @mousedown.self="startMove"
+         @dblclick.self="doubleClick"
+    >
+      <a class="icon flex"><svg-icon :name="app.icon"/></a>
+      <i class="minimize" @click="appMinimize"><svg-icon name="arrow"/></i>
+      <i class="maximize" @click="appMaximize"><svg-icon :name="app.maxed.value?'rhomb':'arrow'"/></i>
+      <i class="close" @click="appClose"><svg-icon name="close"/></i>
     </div>
     <div ref="body" class="body">
       <slot></slot>
@@ -24,22 +30,63 @@
 </template>
 
 <script lang="ts">
-export default {
+import {defineComponent, watchEffect} from 'vue'
+
+export default defineComponent({
   name: "window",
   props: {
-    icon: String,
-    appName: String,
-    position: Array,
-    size: Array,
+    app: Object,
   },
   data (){
     return {
-      prevPos: [],
+      prevPos: [0, 0],
       moving: false,
       resizing: false,
       resizeX: 0,
       resizeY: 0,
+      scale: 1,
+
+      waitNormalize: false,
     }
+  },
+  mounted() {
+    this.$el.addEventListener('transitionend', ()=>{
+      this.$el.style.transitionProperty = 'none'
+      this.app.animating = false;
+    })
+    watchEffect(()=>{
+      if (this.app.animating) return;
+      switch (this.$props.app.status.value){
+        case 0:
+          // close,just do nothing
+          break
+        case 1:
+          // minimize
+          this.app.animating = true;
+          this.$el.style.transitionProperty = 'top, left, opacity, transform'
+          this.$el.style.top = `calc(100% - ${this.app.position[1]}px)`;
+          const taskbarItem = document.querySelector(`#taskbar ._item-${this.app.name}`);
+          if (taskbarItem){
+            this.$el.style.left = `${taskbarItem.offsetLeft-this.app.position[0]}px`;
+          }
+          this.$el.style.opacity = 0;
+          this.scale = '0.1'
+          this.waitNormalize = true;
+          break
+        case 2:
+          // normalize
+          if (this.waitNormalize){
+            this.app.animating = true;
+            this.$el.style.transitionProperty = 'top, left, opacity, transform'
+            this.$el.style.top = `0`;
+            this.$el.style.left = `0`;
+            this.$el.style.opacity = 1;
+            this.scale = '1'
+          }
+          this.waitNormalize = false;
+          break
+      }
+    })
   },
   computed: {
     calcCursor (){
@@ -56,6 +103,9 @@ export default {
         return 'nw-resize'
       }
       return 'default'
+    },
+    topWindow (){
+      return this.apps.slice().sort((a, b)=>b.zindex.value-a.zindex.value)[0]
     }
   },
   watch: {
@@ -67,30 +117,43 @@ export default {
     },
   },
   emits: ['move', 'resize'],
+  inject: ['apps'],
   methods: {
-    startMove (e){
+    setZIndex (){
+      if (this.topWindow !== this.app){
+        this.app.zindex.value = this.topWindow.zindex.value+1;
+      }
+    },
+    startMove (e: MouseEvent){
+      this.setZIndex();
       if (e.button !== 0) return
       e.preventDefault();
       e.stopPropagation();
       this.prevPos = [e.screenX, e.screenY];
-      this.moving = true;
       document.addEventListener('mousemove', this.move);
       document.addEventListener('mouseup', this.endMove);
     },
-    move (e){
+    move (e: MouseEvent){
+      if (!this.moving){
+        this.moving = true;
+      }
       const delta = [e.screenX - this.prevPos[0], e.screenY - this.prevPos[1]];
       this.prevPos = [e.screenX, e.screenY];
-      this.$emit('move', delta);
+      this.doMove(delta);
     },
     endMove (){
       this.moving = false;
       document.removeEventListener('mousemove', this.move);
       document.removeEventListener('mouseup', this.endMove);
     },
-    checkResize (e){
+    doMove (e: Array<number>){
+      this.app.position[0] = this.app.position[0] + e[0]
+      this.app.position[1] = this.app.position[1] + e[1]
+    },
+
+    checkResize (e: MouseEvent){
       if (this.resizing) return;
       const {offsetX, offsetY} = e;
-      console.log(offsetX, offsetY)
       if (offsetX < 5){
         this.resizeX = -1;
       }else if (offsetX >= this.$el.offsetWidth-5){
@@ -111,7 +174,8 @@ export default {
       this.resizeX = 0;
       this.resizeY = 0;
     },
-    startResize (e){
+    startResize (e: MouseEvent){
+      this.setZIndex();
       if (e.button !== 0) return;
       if (this.resizeX || this.resizeY){
         e.preventDefault();
@@ -122,23 +186,29 @@ export default {
         document.addEventListener('mouseup', this.endResize);
       }
     },
-    resize (e){
+    resize (e: MouseEvent){
       if (this.resizeX === -1 || this.resizeY === -1){
         const posDelta = [0, 0];
         const sizeDelta = [0, 0];
         if (this.resizeX === -1){
           posDelta[0] = e.screenX - this.prevPos[0];
           sizeDelta[0] = -e.screenX + this.prevPos[0];
+        }else{
+          posDelta[0] = 0;
+          sizeDelta[0] = e.screenX - this.prevPos[0];
         }
         if (this.resizeY === -1){
           posDelta[1] = e.screenY - this.prevPos[1];
           sizeDelta[1] = -e.screenY + this.prevPos[1];
+        }else {
+          posDelta[1] = 0;
+          sizeDelta[1] = e.screenY - this.prevPos[1];
         }
-        this.$emit('move', posDelta);
-        this.$emit('resize', sizeDelta);
+        this.doMove(posDelta);
+        this.doResize(sizeDelta);
       }else {
         const delta = [this.resizeX ? (e.screenX - this.prevPos[0]) : 0, this.resizeY ? (e.screenY - this.prevPos[1]) : 0];
-        this.$emit('resize', delta);
+        this.doResize(delta);
       }
       this.prevPos = [e.screenX, e.screenY];
     },
@@ -148,18 +218,59 @@ export default {
       this.resizing = false;
       this.noResize();
     },
+    doResize(e: Array<number>){
+      this.app.size[0] = this.app.size[0] + e[0]
+      this.app.size[1] = this.app.size[1] + e[1]
+    },
+
+    doubleClick (e: MouseEvent){
+      if (e.button !== 0) return;
+      if (this.app.maxed.value){
+        this.appNormalize();
+      }else {
+        this.appMaximize();
+      }
+    },
+    appMaximize (){
+      this.app.maxed.value = !this.app.maxed.value;
+    },
+    appNormalize (){
+      this.app.maxed.value = false;
+    },
+    appMinimize (){
+      this.app.status.value = 1;
+    },
+    appClose (){
+      this.app.status.value = 0;
+      this.app.maxed.value = false;
+    },
   }
-}
+})
 </script>
 
 <style scoped lang="scss">
 .window{
   position: absolute;
   padding: 5px;
+  transition-property: none;
+  transition-duration: .15s;
+  transition-timing-function: linear;
+  transform-origin: left;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  &.top .head:before{
+    color: white;
+  }
+  &.maxed{
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0;
+  }
   .head{
     width: 100%;
     height: 1.6rem;
-    background: #3c3f41;
+    background: #31363B;
     padding: .2rem 0;
     cursor: default;
     &.moving{
@@ -167,27 +278,32 @@ export default {
     }
     a{
       cursor: default;
-      margin-left: .2rem;
+      margin-left: .3rem;
+      order: 1;
       :deep(svg) {
         width: 1.4rem;
         height: 1.4rem;
       }
     }
-    span{
+    &:before{
+      content: attr(data-text);
       margin: auto;
       font-size: 1rem;
-      color: white;
+      color: #9a9a9a;
       user-select: none;
+      order: 2;
     }
     i{
       cursor: default;
+      order: 3;
       &.close{
+        padding: .4rem;
         :deep(svg){
           width: .75rem;
           height: .75rem;
         }
       }
-      &.maximize{
+      &.minimize{
         transform: rotate(180deg);
       }
       padding: .3rem;
@@ -198,7 +314,7 @@ export default {
       &:hover{
         background: white;
         &.close{
-          background: #ff2929;
+          background: #ff4c4c;
         }
         :deep(svg){
           fill: black !important;
@@ -214,6 +330,7 @@ export default {
   .body{
     width: 100%;
     height: calc(100% - 2rem);
+    background: #262626;
   }
 }
 </style>
