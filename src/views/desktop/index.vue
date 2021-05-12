@@ -8,9 +8,10 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {defineComponent, inject} from 'vue';
 import wallpaper from "../../assets/images/wallpaper.png";
 import Window from "../../components/window.vue";
+import {typeApp} from "../../utils/apps";
 
 export default defineComponent({
   name: "index",
@@ -20,7 +21,11 @@ export default defineComponent({
       wallpaper,
     }
   },
-  inject: ['apps'],
+  setup (){
+    return {
+      apps: inject('apps') as Array<typeApp>,
+    }
+  },
 })
 </script>
 

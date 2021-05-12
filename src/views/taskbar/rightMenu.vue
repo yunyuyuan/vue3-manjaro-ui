@@ -94,7 +94,7 @@ export default defineComponent({
   },
   data (){
     return {
-      clipboard: [],
+      clipboard: [] as Array<string>,
       volume: 0,
       wifiEnable: true,
       blueEnable: true
@@ -135,7 +135,7 @@ export default defineComponent({
     }
   },
   methods: {
-    focusout (e: MouseEvent){
+    focusout (e: FocusEvent){
       this.$emit('focusout')
     },
     startVolume (){

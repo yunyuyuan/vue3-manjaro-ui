@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts">
-import {computed} from "vue";
+import {defineComponent} from "vue";
 const svgParser = new DOMParser();
 
-export default {
+export default defineComponent({
   name: "IconSvg",
   props: {
     name: {
@@ -43,18 +43,20 @@ export default {
           }
           if (!container.querySelector(name)) {
             const svgElement = svgParser.parseFromString(res.default, "image/svg+xml").querySelector('svg');
-            for (const key of ['width', 'height', 'x', 'y']){
-              svgElement.removeAttribute(key)
+            if (svgElement) {
+              for (const key of ['width', 'height', 'x', 'y']) {
+                svgElement.removeAttribute(key)
+              }
+              svgElement.id = getId
+              container.appendChild(svgElement as SVGSVGElement)
             }
-            svgElement.id = getId
-            container.appendChild(svgElement)
           }
         }
         this.getName =  name;
       }
     }
   },
-}
+})
 </script>
 
 <style scoped lang="scss">

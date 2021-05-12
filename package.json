@@ -9,7 +9,6 @@
   "dependencies": {
     "@fontsource/noto-sans": "^4.3.0",
     "dayjs": "^1.10.4",
-    "tui-image-editor": "^3.14.3",
     "vue": "^3.0.5"
   },
   "devDependencies": {

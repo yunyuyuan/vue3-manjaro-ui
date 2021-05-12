@@ -32,12 +32,14 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, watchEffect} from 'vue'
+import {defineComponent, PropType, watchEffect} from 'vue'
+import {typeApp} from "../utils/apps";
+import mixin from "../utils/mixin";
 
 export default defineComponent({
   name: "window",
   props: {
-    app: Object,
+    app: {type: Object as PropType<typeApp>},
   },
   data (){
     return {
@@ -67,12 +69,12 @@ export default defineComponent({
           this.app.animating = true;
           this.$el.style.transitionProperty = 'top, left, opacity, transform'
           this.$el.style.top = `calc(100% - ${this.app.position[1]}px)`;
-          const taskbarItem = document.querySelector(`#taskbar ._item-${this.app.name}`);
+          const taskbarItem = document.querySelector(`#taskbar ._item-${this.app.name}`) as HTMLElement;
           if (taskbarItem){
             this.$el.style.left = `${taskbarItem.offsetLeft-this.app.position[0]}px`;
           }
           this.$el.style.opacity = 0;
-          this.scale = '0.1'
+          this.scale = 0.1
           this.waitNormalize = true;
           break
         case 2:
@@ -83,7 +85,7 @@ export default defineComponent({
             this.$el.style.top = `0`;
             this.$el.style.left = `0`;
             this.$el.style.opacity = 1;
-            this.scale = '1'
+            this.scale = 1
           }
           this.waitNormalize = false;
           break
@@ -106,9 +108,6 @@ export default defineComponent({
       }
       return 'default'
     },
-    topWindow (){
-      return this.apps.slice().sort((a, b)=>b.zindex.value-a.zindex.value)[0]
-    }
   },
   watch: {
     resizing (){
@@ -119,7 +118,7 @@ export default defineComponent({
     },
   },
   emits: ['move', 'resize'],
-  inject: ['apps'],
+  mixins: [mixin],
   methods: {
     setZIndex (){
       if (this.topWindow !== this.app){

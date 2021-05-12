@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {defineComponent, inject, Ref} from 'vue';
 
 export default defineComponent({
   name: "start",
@@ -31,7 +31,12 @@ export default defineComponent({
       len: 0
     }
   },
-  inject: ['lock', 'power'],
+  setup (){
+    return {
+      lock: inject('lock') as Ref,
+      power: inject('power') as Ref,
+    }
+  },
   async created() {
     console.log('create')
     switch (this.power.value) {

@@ -5,17 +5,18 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent, PropType} from 'vue'
 import mixin from "../../utils/mixin";
+import {typeApp} from "../../utils/apps";
 
 export default defineComponent({
   name: "appIcon",
   props: {
-    app: Object
+    app: {type: Object as PropType<typeApp>},
   },
   mixins: [mixin],
   computed: {
-    isTop (){
+    isTop (): boolean{
       return this.app === this.topWindow
     }
   },

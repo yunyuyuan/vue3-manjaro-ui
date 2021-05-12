@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="detail flex">
-        <span class="flex" v-for="app in activeLis?.apps||[]" @click="startApp(app, $event)">
+        <span class="flex" v-for="app in activeLis?activeLis.apps:[]" @click="startApp(app, $event)">
           <svg-icon :name="app"/>
           <span>{{app}}</span>
         </span>
@@ -59,8 +59,15 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {defineComponent, inject, Ref} from 'vue';
 import mixin from "../../utils/mixin";
+import {typeApp} from "../../utils/apps";
+
+interface cateApps {
+  name: string,
+  icon: string,
+  apps: Array<string>
+}
 
 export default defineComponent({
   name: "leftMenu",
@@ -71,7 +78,7 @@ export default defineComponent({
   data (){
     return {
       search: '',
-      activeLis: null,
+      activeLis: null as cateApps|null,
       activeTab: 'applications',
       appList: [
         {
@@ -103,10 +110,15 @@ export default defineComponent({
           icon: 'system',
           apps: ['about', 'terminal', 'dolphin']
         }
-      ]
+      ] as Array<cateApps>
     }
   },
-  inject: ['lock', 'power'],
+  setup (){
+    return {
+      lock: inject('lock') as Ref,
+      power: inject('power') as Ref,
+    }
+  },
   watch: {
     show (){
       if (this.show){
@@ -120,7 +132,8 @@ export default defineComponent({
   mixins: [mixin],
   methods: {
     startApp (name: string, e: MouseEvent){
-      const app = this.apps.find(app=>app.name===name);
+      const app = this.apps.find((app: typeApp)=>app.name===name);
+      if (!app) return;
       if (e.button !== 0 || app.animating) return;
       if (this.topWindow && app !== this.topWindow) {
         app.zindex.value = this.topWindow.zindex.value + 1;
@@ -128,13 +141,13 @@ export default defineComponent({
       app.status.value = 2;
       this.$emit('focusout')
     },
-    focusout (e){
+    focusout (e: FocusEvent){
       if (e.relatedTarget === this.$refs.input){
         return
       }
       this.$emit('focusout')
     },
-    inputFocusout (e){
+    inputFocusout (e: FocusEvent){
       if (!e.relatedTarget){
         this.$emit('focusout')
       }

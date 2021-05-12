@@ -47,7 +47,9 @@ import {defineComponent} from 'vue';
 import AppIcon from "./appIcon.vue";
 import leftMenu from "./leftMenu.vue";
 import rightMenu from "./rightMenu.vue";
-import dayjs from "dayjs";
+import dayjs, {Dayjs} from "dayjs";
+import {typeApp} from "../../utils/apps";
+import mixin from "../../utils/mixin";
 
 export default defineComponent({
   name: "index",
@@ -61,21 +63,22 @@ export default defineComponent({
 
       arrowActive: false,
       keyboardType: 'keyboard',
-      timeStamp: dayjs(Date.now())
+      timeStamp: dayjs(Date.now()) as Dayjs,
+      showDesktopLis: [] as Array<string>
     }
   },
-  inject: ['apps'],
+  mixins: [mixin],
   computed: {
-    pinnedApp (): Array<object>{
-      return this.apps.filter(app=>app.taskbar!=undefined).sort((a, b)=>a.taskbar-b.taskbar)
+    pinnedApp ():Array<typeApp>{
+      return this.apps.filter((app: typeApp)=>app.taskbar!=undefined).sort((a: typeApp, b: typeApp)=> a.taskbar - b.taskbar)
     },
-    otherApp (): Array<object>{
-      return this.apps.filter(app=>app.order!=undefined&&app.status.value>0).sort((a, b)=>a.order-b.order)
+    otherApp (): Array<typeApp>{
+      return this.apps.filter((app: typeApp)=>app.order!=undefined&&app.status.value>0).sort((a: typeApp, b: typeApp)=> a.order.value - b.order.value)
     },
-    time (){
+    time (): string{
       return this.timeStamp.format('HH:mm')
     },
-    date (){
+    date(): string{
       return this.timeStamp.format('DD MMM')
     }
   },
@@ -105,13 +108,13 @@ export default defineComponent({
       setTimeout(()=>this.animation=false, 200)
     },
     showDesktop (){
-      this.apps.map(app=>{
-        if (app.canReset){
+      this.apps.map((app: typeApp)=>{
+        if (this.showDesktopLis.includes(app.name)){
           app.status.value = 2;
-          app.canReset = false;
+          this.showDesktopLis.splice(this.showDesktopLis.indexOf(app.name)||0, 1)
         }else if (app.status.value === 2){
           app.status.value = 1;
-          app.canReset = true;
+          this.showDesktopLis.push(app.name)
         }
       })
     }

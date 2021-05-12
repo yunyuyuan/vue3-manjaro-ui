@@ -18,6 +18,8 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue'
+import {typeApp} from "../../../utils/apps";
+import mixin from "../../../utils/mixin";
 
 export default defineComponent({
   name: "index",
@@ -36,11 +38,12 @@ export default defineComponent({
       }
     }
   },
-  inject: ['apps'],
+  mixins: [mixin],
   methods: {
     closeTab (idx: number){
       if (this.tabs.length === 1){
-        return this.apps.find(v=>v.name==='chrome').status.value = 0;
+        this.apps.find((v: typeApp)=>v.name==='chrome').status.value = 0;
+        return
       }
       this.tabs.splice(idx, 1)
       this.activeIdx = this.tabs.length-1

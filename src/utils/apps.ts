@@ -1,6 +1,7 @@
 import {defineAsyncComponent, reactive, ref, Ref, Component} from 'vue';
 
-declare interface typeApp{
+
+export declare interface typeApp{
     icon: string,
     name: string,
     taskbar?: number,

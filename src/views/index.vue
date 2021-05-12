@@ -9,13 +9,14 @@
 </template>
 
 <script lang="ts">
+import {defineComponent, inject, Ref} from 'vue'
 import desktop from "./desktop/index.vue"
 import taskbar from "./taskbar/index.vue"
 import LockScreen from "./lock/index.vue"
 import cmdMsg from "./lock/cmdMsg.vue";
 import wallpaper from "../assets/images/blur-bg.jpg";
 
-export default {
+export default defineComponent({
   name: "index",
   components: {desktop, taskbar, LockScreen, cmdMsg},
   data (){
@@ -23,8 +24,13 @@ export default {
       wallpaper,
     }
   },
-  inject: ['lock', 'power']
-}
+  setup (){
+    return {
+      lock: inject('lock') as Ref,
+      power: inject('power') as Ref,
+    }
+  },
+})
 </script>
 
 <style scoped lang="scss">
