@@ -1,6 +1,7 @@
 <template>
-  <div class="cmd flex">
-    <div class="flex" v-for="(item,idx) in words" :class="{show: len>idx}">
+  <div class="cmd flex" @click="restart">
+    <img v-if="over" :src="gameover" alt="over"/>
+    <div v-else class="flex" v-for="(item,idx) in words" :class="{show: len>idx}">
       <span>[<a>OK</a>]</span>
       <p>{{item}}</p>
     </div>
@@ -9,11 +10,13 @@
 
 <script lang="ts">
 import {defineComponent, inject, Ref} from 'vue';
+import gameover from '../../assets/images/gameover.jpg'
 
 export default defineComponent({
   name: "start",
   data (){
     return {
+      gameover,
       words: [
         'This is a fake manjaro.',
         'What can I do...',
@@ -28,7 +31,8 @@ export default defineComponent({
         'This is a fake manjaro.',
         'What can I do...',
       ],
-      len: 0
+      len: 0,
+      over: false
     }
   },
   setup (){
@@ -38,8 +42,7 @@ export default defineComponent({
     }
   },
   async created() {
-    console.log('create')
-    switch (this.power.value) {
+    switch (this.power) {
       case '':
         return
       case 'reboot':
@@ -47,13 +50,13 @@ export default defineComponent({
         this.len = 0;
         setTimeout(async ()=>{
           await this.start();
-          this.power.value = '';
-          this.lock.value = true;
+          this.power = '';
+          this.lock = true;
         }, 500)
         return
       case 'shutdown':
         await this.start();
-        window.close()
+        this.over = true;
         return
     }
   },
@@ -68,6 +71,13 @@ export default defineComponent({
         }
       }, 40)
       })
+    },
+    restart (){
+      if (this.over){
+        this.power = '';
+        this.lock = true;
+        this.over = false
+      }
     }
   }
 })
@@ -81,6 +91,10 @@ export default defineComponent({
   background: black;
   color: white;
   flex-direction: column;
+  >img{
+    margin: auto;
+    height: 4rem;
+  }
   >div{
     width: 100%;
     margin: .3rem 0;

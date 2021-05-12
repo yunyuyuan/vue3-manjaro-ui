@@ -154,13 +154,13 @@ export default defineComponent({
     },
 
     goSleep(){
-      this.lock.value = true;
+      this.lock = true;
     },
     goReboot(){
-      this.power.value = 'reboot';
+      this.power = 'reboot';
     },
     goShutdown(){
-      this.power.value = 'shutdown';
+      this.power = 'shutdown';
     },
   }
 })

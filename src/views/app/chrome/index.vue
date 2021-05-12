@@ -5,7 +5,7 @@
         <span>Tab {{idx}}</span>
         <i @click.stop="closeTab(idx)" class="flex"><svg-icon name="close"/></i>
       </div>
-      <i @click="tabs.push('https://vuejs.org');activeIdx=tabs.length-1" class="add"><svg-icon name="close"/></i>
+      <i @click="tabs.push('https://www.google.com/search?igu=1');activeIdx=tabs.length-1" class="add"><svg-icon name="close"/></i>
     </div>
     <div class="head">
       <input v-model="url" @keypress.enter="enterUrl"/>
@@ -25,7 +25,7 @@ export default defineComponent({
   name: "index",
   data (){
     return {
-      tabs: ['https://vuejs.org', 'https://blog.halberd.cn'],
+      tabs: ['https://www.google.com/search?igu=1', 'https://blog.halberd.cn'],
       activeIdx: 0,
       url: ''
     }

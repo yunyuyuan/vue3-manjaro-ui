@@ -1,7 +1,7 @@
 <template>
   <img @dragstart="" :src="wallpaper" alt="wallpaper"/>
-  <cmd-msg v-if="power.value!==''" />
-  <lock-screen v-else-if="lock.value"/>
+  <cmd-msg v-if="power!==''" />
+  <lock-screen v-else-if="lock"/>
   <template v-else>
     <desktop/>
     <taskbar/>

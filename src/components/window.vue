@@ -127,7 +127,7 @@ export default defineComponent({
     },
     startMove (e: MouseEvent){
       this.setZIndex();
-      if (e.button !== 0) return
+      if (e.button !== 0 || this.app.maxed.value) return
       this.prevPos = [e.screenX, e.screenY];
       document.addEventListener('mousemove', this.move);
       document.addEventListener('mouseup', this.endMove);

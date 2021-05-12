@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent, inject, Ref} from 'vue'
 import dayjs from "dayjs";
 
 export default defineComponent({
@@ -30,7 +30,11 @@ export default defineComponent({
       timeStamp: dayjs(Date.now())
     }
   },
-  inject: ['lock'],
+  setup (){
+    return {
+      lock: inject('lock') as Ref,
+    }
+  },
   computed: {
     time ():string{
       return this.timeStamp.format('HH:mm A')
@@ -46,7 +50,7 @@ export default defineComponent({
   },
   methods: {
     goit (){
-      this.lock.value = false;
+      this.lock = false;
     }
   }
 })
