@@ -12,22 +12,57 @@ import {defineComponent} from 'vue';
 
 export default defineComponent({
   name: "start",
-  props: {
-    words: Array
-  },
   data (){
     return {
+      words: [
+        'This is a fake manjaro.',
+        'What can I do...',
+        'This is a fake manjaro.',
+        'What can I do...',
+        'This is a fake manjaro.',
+        'What can I do...',
+        'This is a fake manjaro.',
+        'What can I do...',
+        'This is a fake manjaro.',
+        'What can I do...',
+        'This is a fake manjaro.',
+        'What can I do...',
+      ],
       len: 0
     }
   },
+  inject: ['lock', 'power'],
+  async created() {
+    console.log('create')
+    switch (this.power.value) {
+      case '':
+        return
+      case 'reboot':
+        await this.start();
+        this.len = 0;
+        setTimeout(async ()=>{
+          await this.start();
+          this.power.value = '';
+          this.lock.value = true;
+        }, 500)
+        return
+      case 'shutdown':
+        await this.start();
+        window.close()
+        return
+    }
+  },
   methods: {
-    start (){
-      const handle = setInterval(()=>{
+    async start (){
+      return new Promise(resolve => {
+         const handle = setInterval(()=>{
         this.len ++;
         if (this.len>this.words.length){
           clearInterval(handle);
+          resolve(0)
         }
       }, 40)
+      })
     }
   }
 })

@@ -1,11 +1,11 @@
 <template>
-<!--  <img @dragstart="" :src="wallpaper" alt="wallpaper"/>-->
-<!--  <lock-screen v-if="lock.value"/>-->
-<!--  <template v-else>-->
-<!--    <desktop/>-->
-<!--    <taskbar/>-->
-<!--  </template>-->
-  <cmd-msg :words="startWords"/>
+  <img @dragstart="" :src="wallpaper" alt="wallpaper"/>
+  <cmd-msg v-if="power.value!==''" />
+  <lock-screen v-else-if="lock.value"/>
+  <template v-else>
+    <desktop/>
+    <taskbar/>
+  </template>
 </template>
 
 <script lang="ts">
@@ -21,37 +21,9 @@ export default {
   data (){
     return {
       wallpaper,
-      startWords: [
-        'This is a fake manjaro.',
-        'What can I do...',
-        'This is a fake manjaro.',
-        'What can I do...',
-        'This is a fake manjaro.',
-        'What can I do...',
-        'This is a fake manjaro.',
-        'What can I do...',
-        'This is a fake manjaro.',
-        'What can I do...',
-        'This is a fake manjaro.',
-        'What can I do...',
-      ],
-      closeWords: [
-        'What can I do...',
-        'This is a fake manjaro.',
-        'What can I do...',
-        'This is a fake manjaro.',
-        'What can I do...',
-        'This is a fake manjaro.',
-        'What can I do...',
-        'This is a fake manjaro.',
-        'What can I do...',
-        'This is a fake manjaro.',
-        'What can I do...',
-        'This is a fake manjaro.',
-      ],
     }
   },
-  inject: ['lock']
+  inject: ['lock', 'power']
 }
 </script>
 

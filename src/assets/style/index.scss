@@ -16,7 +16,7 @@ html, body{
   }
 }
 
-input{
+input.common{
   margin-left: .5rem;
   background: #212121;
   border-radius: .15rem;
@@ -28,6 +28,10 @@ input{
   &:focus, &:hover{
     border-color: #44bbff;
   }
+}
+iframe{
+  border: none;
+  outline: none;
 }
 
 

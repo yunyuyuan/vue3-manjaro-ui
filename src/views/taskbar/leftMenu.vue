@@ -6,7 +6,7 @@
         <b>yunyuyuan</b>
       </div>
       <div class="search flex">
-        <input @focusout.self="inputFocusout" ref="input" v-model="search" placeholder="Search..."/>
+        <input class="common" @focusout.self="inputFocusout" ref="input" v-model="search" placeholder="Search..."/>
       </div>
     </div>
     <div class="body flex">
@@ -106,7 +106,7 @@ export default defineComponent({
       ]
     }
   },
-  inject: ['lock'],
+  inject: ['lock', 'power'],
   watch: {
     show (){
       if (this.show){
@@ -144,10 +144,10 @@ export default defineComponent({
       this.lock.value = true;
     },
     goReboot(){
-
+      this.power.value = 'reboot';
     },
     goShutdown(){
-
+      this.power.value = 'shutdown';
     },
   }
 })

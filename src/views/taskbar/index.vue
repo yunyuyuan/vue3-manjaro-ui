@@ -180,8 +180,8 @@ section{
       padding: 0 .15rem;
       position: relative;
       :deep(>svg){
-        width: 1.7rem;
-        height: 1.7rem;
+        width: 1.6rem;
+        height: 1.6rem;
         fill: white;
       }
       &:before{

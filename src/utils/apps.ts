@@ -19,7 +19,7 @@ export default [{
     name: "chrome",
     taskbar: 0,
     position: reactive([30, 30]),
-    size: reactive([400, 300]),
+    size: reactive([1000, 600]),
     status: ref(0),
     maxed: ref(false),
     zindex: ref(0),

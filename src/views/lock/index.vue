@@ -10,7 +10,7 @@
       <span>yunyuyuan</span>
     </div>
     <div class="login flex">
-      <input v-model="pwd" placeholder="Password..."/>
+      <input class="common" v-model="pwd" placeholder="Password..."/>
       <span class="flex" @click="goit">
         <svg-icon name="arrow"/>
       </span>
@@ -46,10 +46,6 @@ export default defineComponent({
   },
   methods: {
     goit (){
-      if (this.pwd){
-        alert('wrong password: '+this.pwd)
-        return
-      }
       this.lock.value = false;
     }
   }
