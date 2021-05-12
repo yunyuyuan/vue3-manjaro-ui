@@ -12,19 +12,21 @@
        @mouseleave.self="noResize"
        @mousedown="startResize"
   >
-    <div class="head flex"
-         :class="{moving: moving}"
-         :data-text="app.name"
-         @mousedown.self="startMove"
-         @dblclick.self="doubleClick"
-    >
-      <a class="icon flex"><svg-icon :name="app.icon"/></a>
-      <i class="minimize" @click="appMinimize"><svg-icon name="arrow"/></i>
-      <i class="maximize" @click="appMaximize"><svg-icon :name="app.maxed.value?'rhomb':'arrow'"/></i>
-      <i class="close" @click="appClose"><svg-icon name="close"/></i>
-    </div>
-    <div ref="body" class="body">
-      <slot></slot>
+    <div>
+      <div class="head flex"
+           :class="{moving: moving}"
+           :data-text="app.name"
+           @mousedown.self="startMove"
+           @dblclick.self="doubleClick"
+      >
+        <a class="icon flex"><svg-icon :name="app.icon"/></a>
+        <i class="minimize" @click="appMinimize"><svg-icon name="arrow"/></i>
+        <i class="maximize" @click="appMaximize"><svg-icon :name="app.maxed.value?'rhomb':'arrow'"/></i>
+        <i class="close" @click="appClose"><svg-icon name="close"/></i>
+      </div>
+      <div ref="body" class="body">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -77,7 +79,7 @@ export default defineComponent({
           // normalize
           if (this.waitNormalize){
             this.app.animating = true;
-            this.$el.style.transitionProperty = 'top, left, opacity, transform'
+            this.$el.style.transitionProperty = 'top, left, opacity, transform, box-shadow'
             this.$el.style.top = `0`;
             this.$el.style.left = `0`;
             this.$el.style.opacity = 1;
@@ -127,8 +129,6 @@ export default defineComponent({
     startMove (e: MouseEvent){
       this.setZIndex();
       if (e.button !== 0) return
-      e.preventDefault();
-      e.stopPropagation();
       this.prevPos = [e.screenX, e.screenY];
       document.addEventListener('mousemove', this.move);
       document.addEventListener('mouseup', this.endMove);
@@ -178,8 +178,6 @@ export default defineComponent({
       this.setZIndex();
       if (e.button !== 0) return;
       if (this.resizeX || this.resizeY){
-        e.preventDefault();
-        e.stopPropagation();
         this.prevPos = [e.screenX, e.screenY];
         this.resizing = true;
         document.addEventListener('mousemove', this.resize);
@@ -252,85 +250,107 @@ export default defineComponent({
 .window{
   position: absolute;
   padding: 5px;
-  transition-property: none;
+  transition-property: box-shadow;
+  min-height: 5rem;
   transition-duration: .15s;
   transition-timing-function: linear;
   transform-origin: left;
   top: 0;
   left: 0;
   opacity: 1;
-  &.top .head:before{
-    color: white;
+  &.top >div{
+    box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+    >.head:before{
+      color: white;
+    }
   }
   &.maxed{
     width: 100% !important;
     height: 100% !important;
     padding: 0;
   }
-  .head{
+  >div {
     width: 100%;
-    height: 1.6rem;
-    background: #31363B;
-    padding: .2rem 0;
-    cursor: default;
-    &.moving{
-      cursor: move;
-    }
-    a{
+    height: 100%;
+    .head {
+      width: 100%;
+      height: 1.6rem;
+      background: #31363B;
+      padding: .2rem 0;
       cursor: default;
-      margin-left: .3rem;
-      order: 1;
-      :deep(svg) {
-        width: 1.4rem;
-        height: 1.4rem;
+
+      &.moving {
+        cursor: move;
       }
-    }
-    &:before{
-      content: attr(data-text);
-      margin: auto;
-      font-size: 1rem;
-      color: #9a9a9a;
-      user-select: none;
-      order: 2;
-    }
-    i{
-      cursor: default;
-      order: 3;
-      &.close{
-        padding: .4rem;
-        :deep(svg){
-          width: .75rem;
-          height: .75rem;
+
+      a {
+        cursor: default;
+        margin-left: .3rem;
+        order: 1;
+
+        :deep(svg) {
+          width: 1.4rem;
+          height: 1.4rem;
         }
       }
-      &.minimize{
-        transform: rotate(180deg);
+
+      &:before {
+        content: attr(data-text);
+        margin: auto;
+        font-size: .9rem;
+        color: #9a9a9a;
+        user-select: none;
+        order: 2;
       }
-      padding: .3rem;
-      border-radius: 50%;
-      margin: 0 0.1rem;
-      display: flex;
-      align-items: center;
-      &:hover{
-        background: white;
-        &.close{
-          background: #ff4c4c;
+
+      i {
+        cursor: default;
+        order: 3;
+
+        &.close {
+          padding: .4rem;
+
+          :deep(svg) {
+            width: .75rem;
+            height: .75rem;
+          }
         }
-        :deep(svg){
-          fill: black !important;
+
+        &.minimize {
+          transform: rotate(180deg);
         }
-      }
-      :deep(svg){
-        width: .95rem;
-        height: .95rem;
-        fill: white;
+
+        padding: .3rem;
+        border-radius: 50%;
+        margin: 0 0.1rem;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+          background: white;
+
+          &.close {
+            background: #ff4c4c;
+          }
+
+          :deep(svg) {
+            fill: black !important;
+          }
+        }
+
+        :deep(svg) {
+          width: .95rem;
+          height: .95rem;
+          fill: white;
+        }
       }
     }
-  }
-  .body{
-    width: 100%;
-    height: calc(100% - 2rem);
-    background: #262626;
+
+    .body {
+      width: 100%;
+      height: calc(100% - 2rem);
+      background: #262626;
+    }
   }
 }
 </style>

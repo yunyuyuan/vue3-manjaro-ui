@@ -1,4 +1,18 @@
-import {defineAsyncComponent, reactive, ref} from 'vue';
+import {defineAsyncComponent, reactive, ref, Ref, Component} from 'vue';
+
+declare interface typeApp{
+    icon: string,
+    name: string,
+    taskbar?: number,
+    order?: Ref,
+    readonly position: object ,
+    readonly size: object,
+    status: Ref,
+    maxed: Ref,
+    zindex: Ref,
+    animating: boolean,
+    app: Component
+}
 
 export default [{
     icon: "chrome",
@@ -55,5 +69,27 @@ export default [{
     zindex: ref(1),
     animating: false,
     app: defineAsyncComponent(() => import('../views/app/vscode/index.vue'))
+}, {
+    icon: "photoshop",
+    name: "photoshop",
+    order: ref(0),
+    position: reactive([10, 10]),
+    size: reactive([1000, 600]),
+    status: ref(0),
+    maxed: ref(false),
+    zindex: ref(1),
+    animating: false,
+    app: defineAsyncComponent(() => import('../views/app/photoshop/index.vue'))
+}, {
+    icon: "about",
+    name: "about",
+    order: ref(0),
+    position: reactive([50, 50]),
+    size: reactive([500, 350]),
+    status: ref(0),
+    maxed: ref(false),
+    zindex: ref(1),
+    animating: false,
+    app: defineAsyncComponent(() => import('../views/app/about/index.vue'))
 },
-]
+] as Array<typeApp>

@@ -1,6 +1,7 @@
 html, body{
   width: 100%;
   height: 100%;
+  font-family: "Noto Sans", serif;
 }
 
 *{
@@ -14,6 +15,21 @@ html, body{
     transition: all .15s linear;
   }
 }
+
+input{
+  margin-left: .5rem;
+  background: #212121;
+  border-radius: .15rem;
+  border: 1px solid gray;
+  font-size: .8rem;
+  padding: .5rem;
+  color: white;
+  outline: none;
+  &:focus, &:hover{
+    border-color: #44bbff;
+  }
+}
+
 
 #app{
   width: 100%;

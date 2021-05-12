@@ -7,6 +7,6 @@ import manjaro from "./views/index.vue"
 
 export default {
   name: 'App',
-  components: {manjaro}
+  components: {manjaro},
 }
 </script>

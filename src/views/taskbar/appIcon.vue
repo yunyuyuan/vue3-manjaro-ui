@@ -6,17 +6,15 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue'
+import mixin from "../../utils/mixin";
 
 export default defineComponent({
   name: "appIcon",
   props: {
     app: Object
   },
-  inject: ['apps'],
+  mixins: [mixin],
   computed: {
-    topWindow (){
-      return this.apps.slice().sort((a, b)=>b.zindex.value-a.zindex.value)[0]
-    },
     isTop (){
       return this.app === this.topWindow
     }

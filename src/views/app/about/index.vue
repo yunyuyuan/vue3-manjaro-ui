@@ -1,7 +1,5 @@
 <template>
-  <div class="dolphin">
-    <strong>Wait for coding</strong>
-  </div>
+
 </template>
 
 <script lang="ts">
@@ -11,7 +9,5 @@ name: "index"
 </script>
 
 <style scoped lang="scss">
-.dolphin{
-  color: white;
-}
+
 </style>
