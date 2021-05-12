@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import wallpaper from "@/assets/images/wallpaper.png";
+import wallpaper from "../../assets/images/wallpaper.png";
 import Window from "../../components/window.vue";
 
 export default defineComponent({

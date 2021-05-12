@@ -13,7 +13,7 @@ import desktop from "./desktop/index.vue"
 import taskbar from "./taskbar/index.vue"
 import LockScreen from "./lock/index.vue"
 import cmdMsg from "./lock/cmdMsg.vue";
-import wallpaper from "@/assets/images/blur-bg.jpg";
+import wallpaper from "../assets/images/blur-bg.jpg";
 
 export default {
   name: "index",
