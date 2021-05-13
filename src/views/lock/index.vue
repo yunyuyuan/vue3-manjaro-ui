@@ -10,7 +10,7 @@
       <span>yunyuyuan</span>
     </div>
     <div class="login flex">
-      <input type="password" class="common" v-model="pwd" placeholder="Password..."/>
+      <input type="password" class="common" v-model="pwd" @keydown.enter="goit" placeholder="Password..."/>
       <span class="flex" @click="goit">
         <svg-icon name="arrow"/>
       </span>

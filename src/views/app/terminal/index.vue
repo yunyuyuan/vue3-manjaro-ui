@@ -40,6 +40,9 @@ export default {
   methods: {
     processCmd (){
       switch (this.cmdLis[0]){
+        case '':
+          this.cmds.push(['cmd', '', this.dir])
+          break
         case "help":
           this.cmds.push(['cmd', this.input, this.dir])
           this.cmds.push(['out', '<p>ls</p>list files or folders\n<p>cd &lt;dir\&gt;</p>change current directory to dir\n<p>clear</p>clear screen\n<p>poweroff</p>close manjaro\n<p>reboot</p>reboot manjaro'])
