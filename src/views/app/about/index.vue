@@ -8,9 +8,13 @@
     </div>
     <strong>This project is powered by:</strong>
     <ul>
+      <li>Manjaro Linux</li>
       <li>Vue</li>
       <li>@kangc/v-md-editor</li>
       <li>dayjs</li>
+      <li>iframe: <a target="_blank" href="https://github1s.com">github1s</a></li>
+      <li>iframe: <a target="_blank" href="https://3dimg.com/editor/">3dimg</a></li>
+      <li>iframe: <a target="_blank" href="https://github.com/sl1673495/vue-netease-music">vue-netease-music</a></li>
       <li>And more...</li>
     </ul>
     <a target="_blank" href="https://github.com/yunyuyuan/vue3-manjaro-ui">click to github repo</a>
@@ -49,7 +53,6 @@ export default {
     }
     a{
       margin-left: 1rem;
-      color: #004bff;
     }
   }
   >strong{
@@ -62,8 +65,10 @@ export default {
       margin: .5rem;
     }
   }
-  >a{
+  a{
     color: #004bff;
+  }
+  >a{
     margin: 1rem;
   }
 }

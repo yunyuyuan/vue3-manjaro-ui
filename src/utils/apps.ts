@@ -90,7 +90,7 @@ export default [{
     name: "about",
     order: ref(0),
     position: reactive([50, 50]),
-    size: reactive([500, 450]),
+    size: reactive([500, 500]),
     status: ref(2),
     maxed: ref(false),
     zindex: ref(1),
