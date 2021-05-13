@@ -8,8 +8,8 @@
           zIndex: app.zindex.value,
         }"
        :class="{top: topWindow === app, maxed: app.maxed.value}"
-       @mousemove.self="checkResize"
-       @mouseleave.self="noResize"
+       @mousemove="checkResize"
+       @mouseleave="noResize"
        @mousedown="startResize"
   >
     <div>
