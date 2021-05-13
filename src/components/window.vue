@@ -354,6 +354,9 @@ export default defineComponent({
       width: 100%;
       height: calc(100% - 2rem);
       background: #262626;
+      :deep(>div){
+        overflow-y: auto;
+      }
     }
   }
 }
