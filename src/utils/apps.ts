@@ -71,7 +71,7 @@ export default [{
     size: reactive([800, 500]),
     status: ref(0),
     maxed: ref(false),
-    zindex: ref(1),
+    zindex: ref(0),
     animating: false,
     app: defineAsyncComponent(() => import('../views/app/vscode/index.vue'))
 }, {

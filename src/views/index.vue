@@ -2,7 +2,7 @@
   <img @dragstart="" :src="wallpaper" alt="wallpaper"/>
   <cmd-msg v-if="power!==''" />
   <lock-screen v-else-if="lock"/>
-  <desktop/>
+  <desktop v-show="power===''&&!lock" />
   <taskbar v-show="power===''&&!lock"/>
 </template>
 
