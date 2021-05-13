@@ -1,5 +1,6 @@
 <template>
-  <div class="ps">
+  <div class="image">
+    <iframe src="https://3dimg.com/editor/"></iframe>
   </div>
 </template>
 
@@ -7,19 +8,16 @@
 
 export default {
   name: "index",
-  mounted() {
-  }
 }
 </script>
 
 <style scoped lang="scss">
-.ps{
+.image{
   width: 100%;
   height: 100%;
-  >div{
+  >iframe{
     width: 100%;
-    height: 100%;
-    border: none;
+    height: 100% ;
   }
 }
 </style>

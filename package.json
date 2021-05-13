@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "@fontsource/noto-sans": "^4.3.0",
+    "@fontsource/source-code-pro": "^4.3.0",
+    "@kangc/v-md-editor": "^2.2.4",
     "dayjs": "^1.10.4",
     "vue": "^3.0.5"
   },

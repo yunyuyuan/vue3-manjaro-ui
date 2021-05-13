@@ -84,7 +84,7 @@ export default defineComponent({
         {
           name: 'All Applications',
           icon: 'all-apps',
-          apps: ['settings', 'about', 'chrome', 'dolphin', 'terminal', 'vscode', 'photoshop']
+          apps: ['settings', 'about', 'chrome', 'dolphin', 'terminal', 'vscode', 'image editor', 'music', 'gedit']
         },{
           name: 'Development',
           icon: 'development',
@@ -92,7 +92,7 @@ export default defineComponent({
         },{
           name: 'Graphics',
           icon: 'graphics',
-          apps: ['photoshop']
+          apps: ['image editor']
         },{
           name: 'Internet',
           icon: 'internet',
@@ -100,7 +100,7 @@ export default defineComponent({
         },{
           name: 'Office',
           icon: 'office',
-          apps: ['vscode']
+          apps: ['gedit']
         },{
           name: 'Settings',
           icon: 'settings',
@@ -137,6 +137,9 @@ export default defineComponent({
       if (e.button !== 0 || app.animating) return;
       if (this.topWindow && app !== this.topWindow) {
         app.zindex.value = this.topWindow.zindex.value + 1;
+      }
+      if (app.order){
+        app.order.value = Date.now();
       }
       app.status.value = 2;
       this.$emit('focusout')

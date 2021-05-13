@@ -4,7 +4,7 @@
     <div class="pinned flex">
       <app-icon v-for="app in pinnedApp" :class="'_item-'+app.name" :app="app"/>
     </div>
-    <div class="apps">
+    <div class="apps flex">
       <app-icon v-for="app in otherApp" :class="'_item-'+app.name" :app="app"/>
     </div>
 

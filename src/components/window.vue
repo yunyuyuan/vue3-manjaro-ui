@@ -111,6 +111,11 @@ export default defineComponent({
   },
   watch: {
     resizing (){
+      if (this.resizing){
+        document.body.style.userSelect = 'none'
+      }else{
+        document.body.style.userSelect = 'unset'
+      }
       this.$refs.body.style.pointerEvents = this.resizing?'none':'unset'
     },
     moving (){
@@ -310,8 +315,8 @@ export default defineComponent({
           padding: .4rem;
 
           :deep(svg) {
-            width: .75rem;
-            height: .75rem;
+            width: .65rem;
+            height: .65rem;
           }
         }
 
@@ -329,7 +334,7 @@ export default defineComponent({
           background: white;
 
           &.close {
-            background: #ff4c4c;
+            background: #ff6666;
           }
 
           :deep(svg) {
@@ -338,8 +343,8 @@ export default defineComponent({
         }
 
         :deep(svg) {
-          width: .95rem;
-          height: .95rem;
+          width: .85rem;
+          height: .85rem;
           fill: white;
         }
       }

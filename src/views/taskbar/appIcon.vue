@@ -23,6 +23,10 @@ export default defineComponent({
   methods: {
     clickApp (e: MouseEvent){
       if (e.button !== 0 || this.app.animating) return;
+      if (this.app.status.value===2 && !this.isTop) {
+        this.app.zindex.value = this.topWindow.zindex.value + 1;
+        return;
+      }
       if (this.app.status.value!==2 && !this.isTop) {
         this.app.zindex.value = this.topWindow.zindex.value + 1;
       }

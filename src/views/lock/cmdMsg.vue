@@ -1,5 +1,5 @@
 <template>
-  <div class="cmd flex" @click="restart">
+  <div class="cmd flex code-font" @click="restart">
     <img v-if="over" :src="gameover" alt="over"/>
     <div v-else class="flex" v-for="(item,idx) in words" :class="{show: len>idx}">
       <span>[<a>OK</a>]</span>
@@ -97,8 +97,8 @@ export default defineComponent({
   }
   >div{
     width: 100%;
-    margin: .3rem 0;
-    font-size: 1rem;
+    margin: .1rem 0;
+    font-size: .9rem;
     display: none;
     &.show{
       display: flex;
