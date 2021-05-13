@@ -27,7 +27,8 @@ export default {
       input: '',
       cmds: [],
       history: [],
-      hisIdx: -1
+      hisIdx: -1,
+      waitChoose: false
     }
   },
   computed: {
@@ -45,6 +46,7 @@ export default {
   },
   methods: {
     processCmd (){
+      this.waitChoose = false;
       if (this.input !== ''){
         this.history.push(this.input)
       }
@@ -105,23 +107,22 @@ export default {
       this.input = ''
     },
     autoComplete (){
-      if (this.cmdLis[0].startsWith('h')){
+      if(['h', 'he', 'hel', 'help'].includes(this.cmdLis[0])){
         this.input = 'help '
-      }else if(this.cmdLis[0].startsWith('l')){
+      }else if(['l', 'ls'].includes(this.cmdLis[0])){
         this.input = 'ls '
-      }else if(this.cmdLis[0].startsWith('cl')){
+      }else if(['cl', 'cle', 'clea', 'clear'].includes(this.cmdLis[0])){
         this.input = 'clear '
-      }else if(this.cmdLis[0].startsWith('cd')){
-        if (this.cmdLis[0] === 'cd'){
-          this.input = 'cd '+(this.dir==='~'?'musics':'~')
-        }else {
-          this.input = 'cd '
-        }
-      }else if(this.cmdLis[0].startsWith('c')){
+      }else if(this.cmdLis[0]==='cd'){
+        this.input = 'cd '+(this.dir==='~'?'musics':'~')
+      }else if(this.cmdLis[0] === 'c'){
+        if (this.waitChoose) return;
+        this.waitChoose = true;
+        this.cmds.push(['cmd', '', this.dir])
         this.cmds.push(['out', 'cd\tclear'])
-      }else if(this.cmdLis[0].startsWith('r')){
+      }else if(['r', 're', 'reb', 'rebo', 'reboo', 'reboot'].includes(this.cmdLis[0])){
         this.input = 'reboot '
-      }else if(this.cmdLis[0].startsWith('p')){
+      }else if(['p', 'po', 'pow', 'powe', 'power', 'powero', 'powerof', 'poweroff'].includes(this.cmdLis[0])){
         this.input = 'poweroff '
       }
     },
