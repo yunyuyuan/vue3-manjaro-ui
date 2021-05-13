@@ -157,17 +157,20 @@ export default defineComponent({
 
     checkResize (e: MouseEvent){
       if (this.resizing) return;
-      const {offsetX, offsetY} = e;
+      const {clientX, clientY} = e;
+      const {top, left} = this.$el.getBoundingClientRect();
+      const offsetX = clientX - left;
+      const offsetY = clientY - top;
       if (offsetX < 5){
         this.resizeX = -1;
-      }else if (offsetX >= this.$el.offsetWidth-5){
+      }else if (offsetX > this.$el.offsetWidth-5){
         this.resizeX = 1;
       }else{
         this.resizeX = 0;
       }
       if (offsetY < 5){
         this.resizeY = -1;
-      }else if (offsetY >= this.$el.offsetHeight-5){
+      }else if (offsetY > this.$el.offsetHeight-5){
         this.resizeY = 1;
       }else{
         this.resizeY = 0;
@@ -206,8 +209,9 @@ export default defineComponent({
           posDelta[1] = 0;
           sizeDelta[1] = e.screenY - this.prevPos[1];
         }
-        this.doMove(posDelta);
-        this.doResize(sizeDelta);
+        if (this.doResize(sizeDelta)){
+          this.doMove(posDelta);
+        }
       }else {
         const delta = [this.resizeX ? (e.screenX - this.prevPos[0]) : 0, this.resizeY ? (e.screenY - this.prevPos[1]) : 0];
         this.doResize(delta);
@@ -220,9 +224,17 @@ export default defineComponent({
       this.resizing = false;
       this.noResize();
     },
-    doResize(e: Array<number>){
-      this.app.size[0] = this.app.size[0] + e[0]
-      this.app.size[1] = this.app.size[1] + e[1]
+    doResize(e: Array<number>): boolean{
+      const newSize = [
+          this.app.size[0] + e[0],
+          this.app.size[1] + e[1],
+      ]
+      if (newSize[0] > 300 && newSize[1] > 300) {
+        this.app.size[0] = newSize[0];
+        this.app.size[1] = newSize[1];
+        return true;
+      }
+      return false;
     },
 
     doubleClick (e: MouseEvent){
@@ -255,7 +267,6 @@ export default defineComponent({
   position: absolute;
   padding: 5px;
   transition-property: box-shadow;
-  min-height: 5rem;
   transition-duration: .15s;
   transition-timing-function: linear;
   transform-origin: left;

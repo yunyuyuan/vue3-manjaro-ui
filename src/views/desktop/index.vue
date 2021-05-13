@@ -45,8 +45,5 @@ section{
     left: 0;
     right: 0;
   }
-  >.app{
-    min-width: 20rem;
-  }
 }
 </style>
