@@ -7,7 +7,11 @@
     </div>
     <div>
       <span class="header">[ yunyuyuan<b>@</b>manjaro <span>{{dir}}</span> ]$</span>
-      <input class="code-font" v-model="input" @keydown.enter="processCmd" @keydown.tab.prevent="autoComplete"/>
+      <input ref="input" class="code-font" v-model.trim="input"
+             @keydown.up.prevent="upCmd"
+             @keydown.down.prevent="downCmd"
+             @keydown.enter="processCmd"
+             @keydown.tab.prevent="autoComplete"/>
     </div>
   </div>
 </template>
@@ -21,12 +25,14 @@ export default {
     return {
       dir: '~',
       input: '',
-      cmds: []
+      cmds: [],
+      history: [],
+      hisIdx: -1
     }
   },
   computed: {
     cmdLis (){
-      return this.input.trim().split(/\s+/)
+      return this.input.split(/\s+/)
     }
   },
   setup (){
@@ -39,6 +45,10 @@ export default {
   },
   methods: {
     processCmd (){
+      if (this.input !== ''){
+        this.history.push(this.input)
+      }
+      this.hisIdx = -1
       switch (this.cmdLis[0]){
         case '':
           this.cmds.push(['cmd', '', this.dir])
@@ -113,6 +123,26 @@ export default {
         this.input = 'reboot '
       }else if(this.cmdLis[0].startsWith('p')){
         this.input = 'poweroff '
+      }
+    },
+    upCmd (){
+      if (this.hisIdx === -1){
+        this.hisIdx = this.history.length-1
+      }else if (this.hisIdx > 0){
+        this.hisIdx --;
+      }
+      if (this.history.length && this.hisIdx >= 0){
+        this.input = this.history[this.hisIdx]
+      }
+    },
+    downCmd (){
+      if (this.hisIdx === -1){
+        this.hisIdx = this.history.length-1
+      }else if (this.hisIdx < this.history.length-1){
+        this.hisIdx ++;
+      }
+      if (this.history.length && this.hisIdx < this.history.length){
+        this.input = this.history[this.hisIdx];
       }
     }
   }
