@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import {defineComponent, inject, Ref} from 'vue';
-import gameover from '../../assets/images/gameover.jpg'
+import gameover from '../../assets/images/gameover.png'
 
 export default defineComponent({
   name: "start",
