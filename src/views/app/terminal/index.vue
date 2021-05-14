@@ -35,6 +35,17 @@ export default {
       return this.input.split(/\s+/)
     }
   },
+  watch: {
+    cmds :{
+      deep: true,
+      handler () {
+        if (!this.$el) return;
+        this.$nextTick(()=>{
+          this.$el.scrollTop = this.$el.scrollHeight + 100
+        })
+      }
+    }
+  },
   setup (){
     return {
       power: inject('power') as Ref
