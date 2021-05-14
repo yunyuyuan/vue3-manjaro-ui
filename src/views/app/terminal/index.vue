@@ -28,7 +28,6 @@ export default {
       cmds: [],
       history: [],
       hisIdx: -1,
-      waitChoose: false
     }
   },
   computed: {
@@ -46,7 +45,6 @@ export default {
   },
   methods: {
     processCmd (){
-      this.waitChoose = false;
       if (this.input !== ''){
         this.history.push(this.input)
       }
@@ -107,7 +105,11 @@ export default {
       this.input = ''
     },
     autoComplete (){
-      if(['h', 'he', 'hel', 'help'].includes(this.cmdLis[0])){
+      if (!this.cmdLis[0]){
+        this.cmds.push(['cmd', '', this.dir])
+        this.cmds.push(['out', 'type "help" to see helps'])
+        this.input = ''
+      } else if(['h', 'he', 'hel', 'help'].includes(this.cmdLis[0])){
         this.input = 'help '
       }else if(['l', 'ls'].includes(this.cmdLis[0])){
         this.input = 'ls '
@@ -116,8 +118,6 @@ export default {
       }else if(this.cmdLis[0]==='cd'){
         this.input = 'cd '+(this.dir==='~'?'musics':'~')
       }else if(this.cmdLis[0] === 'c'){
-        if (this.waitChoose) return;
-        this.waitChoose = true;
         this.cmds.push(['cmd', '', this.dir])
         this.cmds.push(['out', 'cd\tclear'])
       }else if(['r', 're', 'reb', 'rebo', 'reboo', 'reboot'].includes(this.cmdLis[0])){
