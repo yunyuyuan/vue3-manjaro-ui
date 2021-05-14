@@ -1,4 +1,5 @@
-# 💥 A web Manjaro wrote by Vue
+# 💥 web-manjaro written in Vue
+                
 
 > 🚀 demo: [https://manjaro.halberd.cn](https://manjaro.halberd.cn)
 
