@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import {inject, Ref} from 'vue'
+import {defineComponent, inject, Ref} from 'vue'
 import {escapeHtml, openApp} from '../../../utils/utils'
 import mixin from "../../../utils/mixin";
 import {typeFile} from '../../../../filesystem';
@@ -34,7 +34,7 @@ const helps = [
 ]
 
 
-export default {
+export default defineComponent({
   name: "index",
   data (){
     return {
@@ -233,7 +233,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style scoped lang="scss">

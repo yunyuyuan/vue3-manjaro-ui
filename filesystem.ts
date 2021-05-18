@@ -1,4 +1,6 @@
+// @ts-ignore
 import fs from "fs";
+// @ts-ignore
 import path from "path";
 import mime from "mime";
 
@@ -10,6 +12,7 @@ export type typeFile = {
 }
 
 function recursiveReadDir(dirs: Array<string>, array: Array<typeFile>){
+    // @ts-ignore
     for (const dirent of fs.readdirSync(path.resolve(__dirname, ...['public'].concat(dirs)), {withFileTypes: true})){
         const file: typeFile = {
             name: dirent.name,
