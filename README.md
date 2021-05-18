@@ -13,11 +13,14 @@
 |terminal|![44](https://github.com/yunyuyuan/vue3-manjaro-ui/blob/master/compare/fake/4.png)|![4](https://github.com/yunyuyuan/vue3-manjaro-ui/blob/master/compare/real/4.png)
 
 ### Todo list
--[x] Real [filesystem](https://github.com/yunyuyuan/vue3-manjaro-ui/tree/master/public/dolphin-files) for `dolphin` and `terminal`
--[ ] Image editor in local
--[ ] Music player in local
--[ ] KCalc
--[ ] gedit
+- [x] Real [filesystem](https://github.com/yunyuyuan/vue3-manjaro-ui/tree/master/public/dolphin-files) for `dolphin` and `terminal`
+- [ ] Image viewer in local
+- [ ] Music player in local
+- [ ] KCalc(calculator for manjaro)
+- [ ] improving gedit
+- [ ] calendar
+- [ ] animation when boot and poweroff
+- [ ] contextmenu
 
 ### Powered by:
 * Manjaro Linux
