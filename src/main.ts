@@ -13,7 +13,7 @@ import apps from "./utils/apps";
 createApp(App)
     .component('svg-icon', IconSvg)
     .provide('apps', apps)
-    .provide('lock', ref(true))
+    .provide('lock', ref(false))
     .provide('power', ref(''))
     .use(VMdEditor)
     .mount('#app')

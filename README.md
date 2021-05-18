@@ -2,7 +2,7 @@
                 
 
 > 🚀 demo: [https://manjaro.halberd.cn](https://manjaro.halberd.cn)
-
+---
 ### Compare with Real Manjaro
 
  -- | web | manjaro
@@ -11,6 +11,13 @@
 |runner|![22](https://github.com/yunyuyuan/vue3-manjaro-ui/blob/master/compare/fake/2.png)|![2](https://github.com/yunyuyuan/vue3-manjaro-ui/blob/master/compare/real/2.png)
 |dolphin|![33](https://github.com/yunyuyuan/vue3-manjaro-ui/blob/master/compare/fake/3.png)|![3](https://github.com/yunyuyuan/vue3-manjaro-ui/blob/master/compare/real/3.png)
 |terminal|![44](https://github.com/yunyuyuan/vue3-manjaro-ui/blob/master/compare/fake/4.png)|![4](https://github.com/yunyuyuan/vue3-manjaro-ui/blob/master/compare/real/4.png)
+
+### Todo list
+-[x] Real [filesystem](https://github.com/yunyuyuan/vue3-manjaro-ui/tree/master/public/dolphin-files) for `dolphin` and `terminal`
+-[ ] Image editor in local
+-[ ] Music player in local
+-[ ] KCalc
+-[ ] gedit
 
 ### Powered by:
 * Manjaro Linux

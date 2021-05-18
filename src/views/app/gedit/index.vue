@@ -1,23 +1,30 @@
 <template>
   <div class="gedit flex">
-    <v-md-editor v-model="mdText"/>
+    <v-md-editor v-model="text"/>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {defineComponent, watchEffect} from 'vue';
 
 export default defineComponent({
   name: "index",
-  props: {
-    text: String
-  },
   inject: ['apps'],
-  computed: {
-    mdText() {
-      return this.apps.find(v => v.name === 'gedit').params.text.value
+  data (){
+    return {
+      text: ''
     }
-  }
+  },
+  created (){
+    watchEffect(()=>{
+      const filepath = this.apps.find(v => v.name === 'gedit').params.filepath.value;
+      fetch(`/dolphin-files/${filepath}`).then(res=>{
+        res.text().then(res=>{
+          this.text = res;
+        })
+      })
+    })
+  },
 })
 </script>
 
