@@ -20,8 +20,8 @@ export type typeApp = {
 }
 
 export default [{
-    icon: "chrome",
     name: "chrome",
+    icon: "chrome",
     taskbar: 0,
     position: reactive([30, 30]),
     size: reactive([900, 600]),
@@ -31,8 +31,8 @@ export default [{
     animating: false,
     app: defineAsyncComponent(() => import('../views/app/chrome/index.vue')),
 }, {
-    icon: "dolphin",
     name: "dolphin",
+    icon: "dolphin",
     taskbar: 1,
     position: reactive([10, 10]),
     size: reactive([700, 500]),
@@ -42,8 +42,8 @@ export default [{
     animating: false,
     app: defineAsyncComponent(() => import('../views/app/dolphin/index.vue'))
 }, {
-    icon: "settings",
     name: "settings",
+    icon: "settings",
     order: ref(0),
     position: reactive([30, 30]),
     size: reactive([700, 500]),
@@ -53,8 +53,8 @@ export default [{
     animating: false,
     app: defineAsyncComponent(() => import('../views/app/settings/index.vue'))
 }, {
-    icon: "terminal",
     name: "terminal",
+    icon: "terminal",
     taskbar: 2,
     position: reactive([80, 80]),
     size: reactive([700, 500]),
@@ -64,8 +64,8 @@ export default [{
     animating: false,
     app: defineAsyncComponent(() => import('../views/app/terminal/index.vue'))
 }, {
-    icon: "vscode",
     name: "vscode",
+    icon: "vscode",
     taskbar: 3,
     position: reactive([20, 20]),
     size: reactive([800, 500]),
@@ -75,19 +75,20 @@ export default [{
     animating: false,
     app: defineAsyncComponent(() => import('../views/app/vscode/index.vue'))
 }, {
-    icon: "image editor",
-    name: "image editor",
+    name: "image viewer",
+    icon: "image-viewer",
     order: ref(0),
     position: reactive([10, 10]),
-    size: reactive([1000, 700]),
+    size: reactive([700, 450]),
     status: ref(0),
     maxed: ref(false),
-    zindex: ref(1),
+    zindex: ref(0),
     animating: false,
-    app: defineAsyncComponent(() => import('../views/app/imageditor/index.vue'))
+    app: defineAsyncComponent(() => import('../views/app/image viewer/index.vue')),
+    params: {filepath: ref('')}
 }, {
-    icon: "about",
     name: "about",
+    icon: "about",
     order: ref(0),
     position: reactive([50, 50]),
     size: reactive([500, 500]),
@@ -104,18 +105,18 @@ export default [{
     size: reactive([900, 600]),
     status: ref(0),
     maxed: ref(false),
-    zindex: ref(1),
+    zindex: ref(0),
     animating: false,
     app: defineAsyncComponent(() => import('../views/app/music/index.vue'))
 }, {
-    icon: "gedit",
     name: "gedit",
+    icon: "gedit",
     order: ref(0),
     position: reactive([80, 80]),
     size: reactive([800, 500]),
     status: ref(0),
     maxed: ref(false),
-    zindex: ref(1),
+    zindex: ref(0),
     animating: false,
     app: defineAsyncComponent(() => import('../views/app/gedit/index.vue')),
     params: {filepath: ref('')}

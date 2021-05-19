@@ -19,7 +19,7 @@
       </div>
       <div class="detail flex">
         <span class="flex" v-for="app in activeLis?activeLis.apps:[]" @click="startApp(app, $event)">
-          <svg-icon :name="app"/>
+          <svg-icon :name="calcIcon(app)"/>
           <span>{{app}}</span>
         </span>
       </div>
@@ -62,6 +62,7 @@
 import {defineComponent, inject, Ref} from 'vue';
 import mixin from "../../utils/mixin";
 import {typeApp} from "../../utils/apps";
+import {openApp} from "../../utils/utils";
 
 interface cateApps {
   name: string,
@@ -84,7 +85,7 @@ export default defineComponent({
         {
           name: 'All Applications',
           icon: 'all-apps',
-          apps: ['settings', 'about', 'chrome', 'dolphin', 'terminal', 'vscode', 'image editor', 'music', 'gedit']
+          apps: ['settings', 'about', 'chrome', 'dolphin', 'terminal', 'vscode', 'image viewer', 'music', 'gedit']
         },{
           name: 'Development',
           icon: 'development',
@@ -92,7 +93,7 @@ export default defineComponent({
         },{
           name: 'Graphics',
           icon: 'graphics',
-          apps: ['image editor']
+          apps: ['image viewer']
         },{
           name: 'Internet',
           icon: 'internet',
@@ -131,17 +132,11 @@ export default defineComponent({
   },
   mixins: [mixin],
   methods: {
+    calcIcon (name: string): string{
+      return this.apps.find(v=>v.name===name).icon
+    },
     startApp (name: string, e: MouseEvent){
-      const app = this.apps.find((app: typeApp)=>app.name===name);
-      if (!app) return;
-      if (e.button !== 0 || app.animating) return;
-      if (this.topWindow && app !== this.topWindow) {
-        app.zindex.value = this.topWindow.zindex.value + 1;
-      }
-      if (app.order){
-        app.order.value = Date.now();
-      }
-      app.status.value = 2;
+      openApp.call(this, name);
       this.$emit('focusout')
     },
     focusout (e: FocusEvent){

@@ -99,7 +99,11 @@ export default defineComponent({
       }
     },
     calcMimeIcon (mime: string){
-      return 'mime-'+mime.replaceAll('/', '-');
+      const mimes = mime.split('/');
+      if (mimes[0] === 'image'){
+        return 'mime-image';
+      }
+      return 'mime-'+mimes.join('-');
     },
     processFile (f: typeFile){
       if (f.isDir){
@@ -107,6 +111,10 @@ export default defineComponent({
         return
       }
       const filepath = this.dirNow.concat(f.name).join('/');
+      const mimes = f.mime.split('/');
+      if (mimes[0] === 'image'){
+        openApp.call(this, 'image viewer').params.filepath.value = filepath;
+      }
       switch (f.mime){
         case 'text/markdown':
           openApp.call(this, 'gedit').params.filepath.value = filepath;

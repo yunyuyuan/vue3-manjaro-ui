@@ -17,12 +17,14 @@ export default defineComponent({
   },
   created (){
     watchEffect(()=>{
-      const filepath = this.apps.find(v => v.name === 'gedit').params.filepath.value;
-      fetch(`/dolphin-files/${filepath}`).then(res=>{
-        res.text().then(res=>{
-          this.text = res;
+      if (this.apps) {
+        const filepath = this.apps.find(v => v.name === 'gedit').params.filepath.value;
+        fetch(`/dolphin-files/${filepath}`).then(res => {
+          res.text().then(res => {
+            this.text = res;
+          })
         })
-      })
+      }
     })
   },
 })

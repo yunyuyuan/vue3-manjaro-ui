@@ -10,7 +10,8 @@
        :class="{top: topWindow === app, maxed: app.maxed.value}"
        @mousemove="checkResize"
        @mouseleave="noResize"
-       @mousedown="startResize"
+       @mousedown.capture="startResize"
+       @click.capture="setZIndex"
   >
     <div>
       <div class="head flex"
@@ -35,6 +36,8 @@
 import {defineComponent, PropType, watchEffect} from 'vue'
 import {typeApp} from "../utils/apps";
 import mixin from "../utils/mixin";
+
+const interval = 8;
 
 export default defineComponent({
   name: "window",
@@ -85,7 +88,7 @@ export default defineComponent({
             this.$el.style.top = `0`;
             this.$el.style.left = `0`;
             this.$el.style.opacity = 1;
-            this.scale = 1
+            this.scale = 1;
           }
           this.waitNormalize = false;
           break
@@ -153,6 +156,7 @@ export default defineComponent({
     doMove (e: Array<number>){
       this.app.position[0] = this.app.position[0] + e[0]
       this.app.position[1] = this.app.position[1] + e[1]
+      this.$emit('move');
     },
 
     checkResize (e: MouseEvent){
@@ -161,16 +165,16 @@ export default defineComponent({
       const {top, left} = this.$el.getBoundingClientRect();
       const offsetX = clientX - left;
       const offsetY = clientY - top;
-      if (offsetX < 5){
+      if (offsetX < interval){
         this.resizeX = -1;
-      }else if (offsetX > this.$el.offsetWidth-5){
+      }else if (offsetX > this.$el.offsetWidth-interval){
         this.resizeX = 1;
       }else{
         this.resizeX = 0;
       }
-      if (offsetY < 5){
+      if (offsetY < interval){
         this.resizeY = -1;
-      }else if (offsetY > this.$el.offsetHeight-5){
+      }else if (offsetY > this.$el.offsetHeight-interval){
         this.resizeY = 1;
       }else{
         this.resizeY = 0;
@@ -200,14 +204,14 @@ export default defineComponent({
           sizeDelta[0] = -e.screenX + this.prevPos[0];
         }else{
           posDelta[0] = 0;
-          sizeDelta[0] = e.screenX - this.prevPos[0];
+          sizeDelta[0] = 0;
         }
         if (this.resizeY === -1){
           posDelta[1] = e.screenY - this.prevPos[1];
           sizeDelta[1] = -e.screenY + this.prevPos[1];
         }else {
           posDelta[1] = 0;
-          sizeDelta[1] = e.screenY - this.prevPos[1];
+          sizeDelta[1] = 0;
         }
         if (this.doResize(sizeDelta)){
           this.doMove(posDelta);
@@ -232,6 +236,7 @@ export default defineComponent({
       if (newSize[0] > 300 && newSize[1] > 300) {
         this.app.size[0] = newSize[0];
         this.app.size[1] = newSize[1];
+        this.$emit('resize');
         return true;
       }
       return false;
@@ -247,9 +252,15 @@ export default defineComponent({
     },
     appMaximize (){
       this.app.maxed.value = !this.app.maxed.value;
+      this.$nextTick(()=>{
+        this.$emit('resize');
+      })
     },
     appNormalize (){
       this.app.maxed.value = false;
+      this.$nextTick(()=>{
+        this.$emit('resize');
+      })
     },
     appMinimize (){
       this.app.status.value = 1;
@@ -265,7 +276,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .window{
   position: absolute;
-  padding: 5px;
+  padding: 8px;
   transition-property: box-shadow;
   transition-duration: .15s;
   transition-timing-function: linear;

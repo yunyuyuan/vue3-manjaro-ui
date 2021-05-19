@@ -14,10 +14,11 @@ export type typeFile = {
 function recursiveReadDir(dirs: Array<string>, array: Array<typeFile>){
     // @ts-ignore
     for (const dirent of fs.readdirSync(path.resolve(__dirname, ...['public'].concat(dirs)), {withFileTypes: true})){
+        const isDir = dirent.isDirectory();
         const file: typeFile = {
             name: dirent.name,
-            mime: mime.getType(dirent.name)||'folder',
-            isDir: dirent.isDirectory(),
+            mime: isDir?'folder':mime.getType(dirent.name),
+            isDir,
         }
         array.push(file);
         if (file.isDir){

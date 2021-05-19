@@ -1,3 +1,5 @@
+[中文README](https://github.com/yunyuyuan/vue3-manjaro-ui/blob/master/README.zh.md)
+
 # 💥 web-manjaro written in Vue
                 
 
@@ -14,7 +16,7 @@
 
 ### Todo list
 - [x] Real [filesystem](https://github.com/yunyuyuan/vue3-manjaro-ui/tree/master/public/dolphin-files) for `dolphin` and `terminal`
-- [ ] Image viewer in local
+- [x] Image viewer in local
 - [ ] Music player in local
 - [ ] KCalc(calculator for manjaro)
 - [ ] improving gedit
