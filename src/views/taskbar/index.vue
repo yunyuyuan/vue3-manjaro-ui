@@ -92,8 +92,7 @@ export default defineComponent({
   },
   methods: {
     toggleLeftMenu (){
-      const actived = this.$refs.leftmenu.$el.classList.contains('active');
-      if (this.animation && actived) return;
+      if (this.animation) return;
       this.animation = false;
       !this.showLeft && (this.showLeft = !this.showLeft);
     },
@@ -124,9 +123,8 @@ export default defineComponent({
       })
     },
     toggleCalendar (){
-      const actived = this.$refs.calendar.$el.classList.contains('active');
-      if (this.animation && actived) return;
-      this.showCalendar = !actived;
+      if (this.animation) return;
+      this.showCalendar = !this.showCalendar;
       this.animation = false;
     },
     calendarFocusout (){
