@@ -10,7 +10,7 @@
 <script lang="ts">
 import {defineComponent, watchEffect} from 'vue';
 import 'yunyuyuan-viewerjs/dist/viewer.css';
-import Viewer from 'yunyuyuan-viewerjs';
+import Viewer from 'yunyuyuan-viewerjs/dist/viewer';
 import dolphinFiles from "../../../../get-dolphin-filesystem";
 import {typeFile} from "../../../../filesystem";
 

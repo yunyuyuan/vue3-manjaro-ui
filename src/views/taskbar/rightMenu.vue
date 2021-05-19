@@ -1,5 +1,5 @@
 <template>
-  <div class="right-menu" tabindex="1" :class="{active: show !== ''}" @focusout="focusout">
+  <div class="right-menu" tabindex="1" :class="{active: show !== ''}" @focusout="$emit('focusout')">
     <div class="head flex">
       <i class="flex"><svg-icon name="arrow"/></i>
       <span>{{title}}</span>
@@ -135,9 +135,6 @@ export default defineComponent({
     }
   },
   methods: {
-    focusout (e: FocusEvent){
-      this.$emit('focusout')
-    },
     startVolume (){
     },
     changeVolume (){

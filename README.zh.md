@@ -27,10 +27,11 @@
 ### Powered by:
 * Manjaro Linux
 * Vue
-* @kangc/v-md-editor
-* dayjs
+* [vue-markdown-editor](https://github.com/code-farmer-i/vue-markdown-editor)
+* [dayjs](https://github.com/iamkun/dayjs)
+* [color-calendar](https://github.com/yunyuyuan/color-calendar)
+* [viewerjs](https://github.com/fengyuanchen/viewerjs)
 * iframe: [github1s](https://github1s.com)
-* iframe: [3dimg](https://https://3dimg.com/editor)
 * iframe: [vue-netease-music](https://github.com/sl1673495/vue-netease-music)
 * 以及其它的项目...
 

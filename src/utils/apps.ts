@@ -91,7 +91,7 @@ export default [{
     icon: "about",
     order: ref(0),
     position: reactive([50, 50]),
-    size: reactive([500, 500]),
+    size: reactive([450, 400]),
     status: ref(2),
     maxed: ref(false),
     zindex: ref(1),

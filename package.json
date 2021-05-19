@@ -10,9 +10,10 @@
     "@fontsource/noto-sans": "^4.3.0",
     "@fontsource/source-code-pro": "^4.3.0",
     "@kangc/v-md-editor": "^2.2.4",
+    "color-calendar": "^1.0.5",
     "dayjs": "^1.10.4",
-    "yunyuyuan-viewerjs": "^1.9.0",
-    "vue": "^3.0.5"
+    "vue": "^3.0.5",
+    "yunyuyuan-viewerjs": "^1.9.0"
   },
   "devDependencies": {
     "@types/node": "^15.0.2",

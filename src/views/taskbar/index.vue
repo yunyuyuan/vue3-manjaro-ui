@@ -30,14 +30,15 @@
       <i @click="showDesktop">
         <svg-icon name="desktop" style="width: 2.2rem;height: 2.2rem"/>
       </i>
-      <div class="time flex">
+      <div class="time flex" @click="toggleCalendar">
         <time>{{time}}</time>
         <span>{{date}}</span>
       </div>
     </div>
 
-    <left-menu :show="showLeft" @focusout="leftFocusout"/>
+    <left-menu ref="leftmenu" :show="showLeft" @focusout="leftFocusout"/>
     <right-menu :show="showRight" @focusout="rightFocusout"/>
+    <the-calendar ref="calendar" :show="showCalendar" @focusout="calendarFocusout"/>
     <span class="bg"></span>
   </section>
 </template>
@@ -47,17 +48,19 @@ import {defineComponent} from 'vue';
 import AppIcon from "./appIcon.vue";
 import leftMenu from "./leftMenu.vue";
 import rightMenu from "./rightMenu.vue";
+import TheCalendar from "./calendar.vue";
 import dayjs, {Dayjs} from "dayjs";
 import {typeApp} from "../../utils/apps";
 import mixin from "../../utils/mixin";
 
 export default defineComponent({
   name: "index",
-  components: {AppIcon, leftMenu, rightMenu},
+  components: {AppIcon, leftMenu, rightMenu, TheCalendar},
   data (){
     return {
       showLeft: false,
       showRight: '',
+      showCalendar: false,
       oldShowRight: '',
       animation: false,
 
@@ -89,7 +92,9 @@ export default defineComponent({
   },
   methods: {
     toggleLeftMenu (){
-      if (this.animation) return
+      const actived = this.$refs.leftmenu.$el.classList.contains('active');
+      if (this.animation && actived) return;
+      this.animation = false;
       !this.showLeft && (this.showLeft = !this.showLeft);
     },
     leftFocusout (){
@@ -117,6 +122,17 @@ export default defineComponent({
           this.showDesktopLis.push(app.name)
         }
       })
+    },
+    toggleCalendar (){
+      const actived = this.$refs.calendar.$el.classList.contains('active');
+      if (this.animation && actived) return;
+      this.showCalendar = !actived;
+      this.animation = false;
+    },
+    calendarFocusout (){
+      this.showCalendar = false;
+      this.animation = true;
+      setTimeout(()=>this.animation=false, 200)
     }
   }
 })
