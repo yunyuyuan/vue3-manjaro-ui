@@ -13,7 +13,7 @@
     "@vueform/slider": "^1.0.5",
     "dayjs": "^1.10.4",
     "vue": "^3.0.5",
-    "yunyuyuan-color-calendar": "^1.0.6",
+    "yunyuyuan-color-calendar": "^1.0.7",
     "yunyuyuan-viewerjs": "^1.9.0"
   },
   "devDependencies": {
