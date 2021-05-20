@@ -1,5 +1,5 @@
 <template>
-  <div class="terminal code-font" @click.self="$refs.input.focus()">
+  <div class="terminal code-font" @click.self="focusInput">
     <p>> Enjoy the fake terminal 😆. And there have an Easter Egg.</p>
     <div v-for="item in cmds">
       <b class="header" v-if="item[0]==='cmd'">[yunyuyuan@manjaro <span>{{item[2]}}</span>]$</b>
@@ -85,6 +85,9 @@ export default defineComponent({
     this.$el.querySelector('input').focus()
   },
   methods: {
+    focusInput(){
+      this.$refs.input.focus()
+    },
     pushCmd(cmd: string){
       this.cmds.push(['cmd', cmd, this.dirStr])
     },
