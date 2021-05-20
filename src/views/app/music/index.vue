@@ -175,6 +175,11 @@ export default defineComponent({
       this.audio.currentTime = this.playDuration;
       this.waitSlide = false;
     }
+  },
+  beforeUnmount() {
+    if (!this.audio.paused){
+      this.audio.pause()
+    }
   }
 })
 </script>

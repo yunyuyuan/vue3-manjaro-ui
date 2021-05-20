@@ -1,5 +1,5 @@
 <template>
-  <div class="terminal code-font" onclick="this.querySelector('input').focus()">
+  <div class="terminal code-font" @click.self="$refs.input.focus()">
     <p>> Enjoy the fake terminal 😆. And there have an Easter Egg.</p>
     <div v-for="item in cmds">
       <b class="header" v-if="item[0]==='cmd'">[yunyuyuan@manjaro <span>{{item[2]}}</span>]$</b>
@@ -161,10 +161,11 @@ export default defineComponent({
             if (file) {
               switch (file.mime){
                 case 'text/markdown':
-                  openApp.call(this, 'gedit').params.filepath.value = file.name;
+                  openApp.call(this, 'gedit').params.filepath.value = this.dir.concat([file.name]).join('/');
                   break
                 case 'audio/mpeg':
-                  openApp.call(this, 'music');
+                  openApp.call(this, 'music').params.filepath.value = this.dir.concat([file.name]).join('/');
+                  break
               }
             }else{
               this.cmds.push(['out', 'No such file: "'+this.cmdLis[1]+'"'])
@@ -203,7 +204,7 @@ export default defineComponent({
       }else if(['pw', 'pwd'].includes(command)){
         this.input = 'pwd '
       }else if(command==='cd'){
-        this.input = 'cd '+(this.dir==='~'?'musics':'~')
+        this.input = 'cd '
       }else if(['r', 're', 'reb', 'rebo', 'reboo', 'reboot'].includes(command)){
         this.input = 'reboot '
       }else if(['po', 'pow', 'powe', 'power', 'powero', 'powerof', 'poweroff'].includes(command)){

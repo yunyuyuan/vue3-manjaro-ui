@@ -18,6 +18,7 @@
 - [x] Real [filesystem](https://github.com/yunyuyuan/vue3-manjaro-ui/tree/master/public/dolphin-files) for `dolphin` and `terminal`
 - [x] Image viewer in local
 - [x] Music player in local
+- [ ] Video player in local
 - [ ] KCalc(calculator for manjaro)
 - [ ] improving gedit
 - [x] calendar
