@@ -45,7 +45,7 @@
           />
         </div>
       </div>
-      <audio :src="activeFile" @ended="turn(1)"></audio>
+      <audio @ended="turn(1)"></audio>
     </div>
   </div>
 </template>
@@ -106,7 +106,7 @@ export default defineComponent({
     }
   },
   watch: {
-    activeFile() {
+    activeFile(val) {
       this.canAutoPlay = true;
       try {
         this.audio.pause();
@@ -116,6 +116,18 @@ export default defineComponent({
       this.loading = true;
       this.playDuration = 0;
       this.fakePlayDuration = 0;
+
+      const request = new XMLHttpRequest();
+      request.open("GET", val, true);
+      request.responseType = "blob";
+      request.onload = ()=> {
+        if (request.status == 200) {
+          this.audio.src = URL.createObjectURL(request.response);
+          this.audio.load();
+          this.audio.play();
+        }
+      }
+      request.send();
     },
     playDuration (){
       if (this.audio.paused){

@@ -19,6 +19,7 @@
 - [x] Image viewer in local
 - [x] Music player in local
 - [ ] Video player in local
+- [ ] Office
 - [ ] KCalc(calculator for manjaro)
 - [ ] improving gedit
 - [x] calendar
