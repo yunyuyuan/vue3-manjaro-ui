@@ -83,11 +83,6 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/lodash@^4.14.165":
-  version "4.14.169"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.169.tgz#83c217688f07a4d9ef8f28a3ebd1d318f6ff4cbb"
-  integrity sha512-DvmZHoHTFJ8zhVYwCLWbQ7uAbYQEk52Ev2/ZiQ7Y7gQGeV9pjBqjnQpECMHfKS1rCYAhMI7LHVxwyZLZinJgdw==
-
 "@types/minimatch@*":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.4.tgz#f0ec25dbf2f0e4b18647313ac031134ca5b24b21"
@@ -185,6 +180,14 @@
   version "3.0.11"
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.11.tgz#20d22dd0da7d358bb21c17f9bde8628152642c77"
   integrity sha512-b+zB8A2so8eCE0JsxjL24J7vdGl8rzPQ09hZNhystm+KqSbKcAej1A+Hbva1rCMmTTqA+hFnUSDc5kouEo0JzA==
+
+"@vueform/slider@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@vueform/slider/-/slider-1.0.5.tgz#7ac07ca493730103e3887c5b04eae0423ffc8305"
+  integrity sha512-a9qzQxyXk4JEYuZtbwyez4cZLlmX6F41vNhsEpfL1zr86+QDd0ND//z8vJaOp34dOm9YUHpNjb8qE/hDgzTZig==
+  dependencies:
+    nouislider "^14.6.3"
+    wnumb "^1.2.0"
 
 "@vuepress/markdown@^1.4.1":
   version "1.8.2"
@@ -623,11 +626,6 @@ collection-visit@^1.0.0:
     map-visit "^1.0.0"
     object-visit "^1.0.0"
 
-color-calendar@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/color-calendar/-/color-calendar-1.0.5.tgz#b4cb774cdbc8519db957a434a564db114994e47d"
-  integrity sha512-E71QVMyiMcAQ8cvTkKK2GUcqTsWjMMiYIbLRVWwFQZM+AF7bulCeedU1hd2vfiQl6n/h8MPMtRTMVJi72fRf7A==
-
 color-convert@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
@@ -690,11 +688,6 @@ copy-to-clipboard@^3.3.1:
   integrity sha512-i13qo6kIHTTpCm8/Wup+0b1mVWETvu2kIMzKoK8FpkLkFxlt0znUAHcMzox+T8sPlqtZXq3CulEjQHsYiGFJUw==
   dependencies:
     toggle-selection "^1.0.6"
-
-core-js@^3.7.0:
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.12.1.tgz#6b5af4ff55616c08a44d386f1f510917ff204112"
-  integrity sha512-Ne9DKPHTObRuB09Dru5AjwKjY4cJHVGu+y5f7coGn1E9Grkc3p2iBwE9AI/nJzsE29mQF7oq+mhYYRqOMFN1Bw==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -1009,16 +1002,6 @@ dashdash@^1.12.0:
   integrity sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
   dependencies:
     assert-plus "^1.0.0"
-
-date-fns-tz@^1.0.12:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/date-fns-tz/-/date-fns-tz-1.1.4.tgz#38282c2bfab08946a4e9bb89d733451e5525048b"
-  integrity sha512-lQ+FF7xUxxRuRqIY7H/lagnT3PhhSnnvtGHzjE5WZKwRyLU7glJfLys05SZ7zHlEr6RXWiqkmgWq4nCkcElR+g==
-
-date-fns@^2.16.1:
-  version "2.21.3"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.21.3.tgz#8f5f6889d7a96bbcc1f0ea50239b397a83357f9b"
-  integrity sha512-HeYdzCaFflc1i4tGbj7JKMjM4cKGYoyxwcIIkHzNgCkX8xXDNJDZXgDDVchIWpN4eQc3lH37WarduXFZJOtxfw==
 
 dayjs@^1.10.4:
   version "1.10.4"
@@ -1978,7 +1961,7 @@ lodash.camelcase@^4.3.0:
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
   integrity sha1-soqmKIorn8ZRA1x3EfZathkDMaY=
 
-lodash@^4.0.0, lodash@^4.17.15, lodash@^4.17.20, lodash@~4.17.10:
+lodash@^4.0.0, lodash@^4.17.15, lodash@~4.17.10:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -2342,6 +2325,11 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
+
+nouislider@^14.6.3:
+  version "14.7.0"
+  resolved "https://registry.yarnpkg.com/nouislider/-/nouislider-14.7.0.tgz#a71db0587c92567b6da1df57d251d3696d942362"
+  integrity sha512-4RtQ1+LHJKesDCNJrXkQcwXAWCrC2aggdLYMstS/G5fEWL+fXZbUA9pwVNHFghMGuFGRATlDLNInRaPeRKzpFQ==
 
 npmlog@^4.0.0, npmlog@^4.1.2:
   version "4.1.2"
@@ -3358,17 +3346,6 @@ uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-v-calendar@^3.0.0-alpha.4:
-  version "3.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/v-calendar/-/v-calendar-3.0.0-alpha.4.tgz#1e03d2df2827d713c77ca11a9dbf84c15c44ebf6"
-  integrity sha512-i3dNvDbRTIiFQQepi69hekRKSsWXxBwL7J4l2x7LAnwp1s1C/eCsA7nroOWTqXtR5yCL+iK14rjA6KSpYeNsNQ==
-  dependencies:
-    "@types/lodash" "^4.14.165"
-    core-js "^3.7.0"
-    date-fns "^2.16.1"
-    date-fns-tz "^1.0.12"
-    lodash "^4.17.20"
-
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.4.tgz#fc91f6b9c7ba15c857f4cb2c5defeec39d4f410a"
@@ -3441,6 +3418,11 @@ wide-align@^1.1.0:
   dependencies:
     string-width "^1.0.2 || 2"
 
+wnumb@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/wnumb/-/wnumb-1.2.0.tgz#f6fa5bfa739b9ca3b1e472094e1feeeb189484d9"
+  integrity sha512-eYut5K/dW7usfk/Mwm6nxBNoTPp/uP7PlXld+hhg7lDtHLdHFnNclywGYM9BRC7Ohd4JhwuHg+vmOUGfd3NhVA==
+
 wrap-ansi@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-5.1.0.tgz#1fd1f67235d5b6d0fee781056001bfb694c03b09"
@@ -3501,6 +3483,11 @@ yargs@^13.3.2:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^13.1.2"
+
+yunyuyuan-color-calendar@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/yunyuyuan-color-calendar/-/yunyuyuan-color-calendar-1.0.6.tgz#a117e68768983c95583bbc639d3ba54d6147a90c"
+  integrity sha512-9Cd8PYcKG+YLlvcdVwXN2U4DgdVqilFOlDZPfGHLsrPByD/HAuUrLYmzkRfZC7wcnRECDTQ0jAlXvbe/2mNQSw==
 
 yunyuyuan-viewerjs@^1.9.0:
   version "1.9.0"

@@ -16,11 +16,11 @@
 
 ### Todo列表
 - [x] 真实的[文件系统](https://github.com/yunyuyuan/vue3-manjaro-ui/tree/master/public/dolphin-files) 用于 `dolphin` 和 `terminal`操作
-- [ ] 本地图片查看器
-- [ ] 本地音乐播放器
+- [x] 本地图片查看器
+- [x] 本地音乐播放器
 - [ ] KCalc(manjaro的计算器)
 - [ ] 优化gedit
-- [ ] 日历
+- [x] 日历
 - [ ] 开关机动画
 - [ ] 右键菜单
 

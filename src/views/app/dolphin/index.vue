@@ -8,9 +8,9 @@
         </span>
         <svg-icon v-for="i in ['icons', 'details', 'tree']" :name="'view-list-'+i"/>
       </div>
-      <span class="flex">/<svg-icon name="arrow"/>home<svg-icon name="arrow"/>yunyuyuan
-        <template v-for="dir in dirNow">
-          <svg-icon name="arrow"/>{{dir}}
+      <span class="flex">/<svg-icon name="arrow"/><span @click="dirNow=[]">home</span><svg-icon name="arrow"/><span @click="dirNow=[]">yunyuyuan</span>
+        <template v-for="(dir,idx) in dirNow">
+          <svg-icon name="arrow"/><span @click="dirNow=dirNow.slice(0, idx+1)">{{dir}}</span>
         </template>
       </span>
     </div>
@@ -120,7 +120,7 @@ export default defineComponent({
           openApp.call(this, 'gedit').params.filepath.value = filepath;
           break
         case 'audio/mpeg':
-          openApp.call(this, 'music');
+          openApp.call(this, 'music').params.filepath.value = filepath;
           break
       }
     }

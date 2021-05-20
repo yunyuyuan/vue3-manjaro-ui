@@ -1,7 +1,7 @@
 <template>
   <div class="image">
     <div class="viewer">
-      <img v-show="false" v-for="img in images" :src="calcSrc(img)" alt="img"/>
+      <img v-show="false" v-for="img in images" :src="calcSrc(img)" :alt="img.split('/').pop()"/>
     </div>
     <div class="container"></div>
   </div>
@@ -11,8 +11,7 @@
 import {defineComponent, watchEffect} from 'vue';
 import 'yunyuyuan-viewerjs/dist/viewer.css';
 import Viewer from 'yunyuyuan-viewerjs/dist/viewer';
-import dolphinFiles from "../../../../get-dolphin-filesystem";
-import {typeFile} from "../../../../filesystem";
+import {findMimeFiles} from "../../../utils/utils";
 
 export default defineComponent({
   name: "index",
@@ -24,23 +23,7 @@ export default defineComponent({
   },
   computed: {
     images (){
-      const images = [];
-      function findImage (path: Array<string>){
-        let files = dolphinFiles as Array<typeFile>;
-        for (const i of path){
-          files = files.find(v=>v.isDir&&v.name===i).sub;
-        }
-        const pathStr = path.join('/');
-        files.forEach(file=>{
-          if (file.mime.split('/')[0]==='image'){
-            images.push(pathStr+'/'+file.name);
-          }else if (file.isDir){
-            findImage(path.concat(file.name));
-          }
-        })
-      }
-      findImage([]);
-      return images;
+      return findMimeFiles(/^image\//);
     }
   },
   watch: {

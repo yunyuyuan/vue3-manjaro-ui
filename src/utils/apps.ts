@@ -102,12 +102,13 @@ export default [{
     name: "music",
     order: ref(0),
     position: reactive([80, 80]),
-    size: reactive([900, 600]),
+    size: reactive([800, 500]),
     status: ref(0),
     maxed: ref(false),
     zindex: ref(0),
     animating: false,
-    app: defineAsyncComponent(() => import('../views/app/music/index.vue'))
+    app: defineAsyncComponent(() => import('../views/app/music/index.vue')),
+    params: {filepath: ref('')}
 }, {
     name: "gedit",
     icon: "gedit",

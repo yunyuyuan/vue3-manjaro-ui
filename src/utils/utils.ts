@@ -1,8 +1,30 @@
 import {typeApp} from "./apps";
+import {typeFile} from "../../filesystem";
+import dolphinFiles from "../../get-dolphin-filesystem";
 
 export function escapeHtml(s: string): string{
     return s.replaceAll('<', '&lt;')
         .replaceAll('>', '&gt;')
+}
+
+export function findMimeFiles (type: RegExp): Array<string>{
+    const ret = [];
+    function findImage (path: Array<string>){
+        let files = dolphinFiles as Array<typeFile>;
+        for (const i of path){
+            files = files.find(v=>v.isDir&&v.name===i).sub;
+        }
+        const pathStr = path.join('/');
+        files.forEach(file=>{
+            if (type.test(file.mime)){
+                ret.push(pathStr+'/'+file.name);
+            }else if (file.isDir){
+                findImage(path.concat(file.name));
+            }
+        })
+    }
+    findImage([]);
+    return ret;
 }
 
 export function openApp(name: string): typeApp{

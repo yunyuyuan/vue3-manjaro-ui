@@ -1,13 +1,13 @@
 <template>
   <div :class="{active: show}" class="calendar" tabindex="1" @focusout="$emit('focusout')">
-    <div id="calendar"></div>
+    <div class="contain"></div>
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import Calendar from "color-calendar";
-import "color-calendar/dist/css/theme-glass.css";
+import Calendar from "yunyuyuan-color-calendar";
+import "yunyuyuan-color-calendar/dist/css/theme-glass.css";
 
 export default defineComponent({
   name: "calendar",
@@ -24,7 +24,7 @@ export default defineComponent({
   },
   mounted() {
     new Calendar({
-      id: "#calendar",
+      id: this.$el.querySelector('.contain'),
       theme: "glass"
     });
   }
