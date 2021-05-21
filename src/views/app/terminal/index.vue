@@ -20,8 +20,7 @@
 import {defineComponent, inject, Ref} from 'vue'
 import {escapeHtml, openApp} from '../../../utils/utils'
 import mixin from "../../../utils/mixin";
-import {typeFile} from '../../../../filesystem';
-import dolphinFiles from '../../../../get-dolphin-filesystem'
+import {typeFile, dolphinFiles} from "../../../../filesystem";
 
 const helps = [
     ['ls', 'list files or folders'],

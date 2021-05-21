@@ -69,8 +69,7 @@
 import mixin from "../../../utils/mixin";
 import {defineComponent} from 'vue';
 import {openApp} from "../../../utils/utils";
-import {typeFile} from '../../../../filesystem';
-import dolphinFiles from '../../../../get-dolphin-filesystem'
+import {typeFile, dolphinFiles} from "../../../../filesystem";
 
 export default defineComponent({
   name: "index",

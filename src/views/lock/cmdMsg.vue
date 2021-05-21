@@ -88,9 +88,17 @@ export default defineComponent({
   position: relative;
   width: 100%;
   height: 100%;
-  background: black;
+  background: #00000055;
   color: white;
   flex-direction: column;
+  animation: blackin .2s linear forwards;
+  @keyframes blackin {
+    0%{
+      background: #00000055;
+    }100%{
+         background: #000000ff;
+     }
+  }
   >img{
     margin: auto;
     height: 4rem;

@@ -30,4 +30,4 @@ function recursiveReadDir(dirs: Array<string>, array: Array<typeFile>){
 
 const dolphinFiles: Array<typeFile> = [];
 recursiveReadDir(['dolphin-files'], dolphinFiles);
-export {dolphinFiles};
+export {dolphinFiles}

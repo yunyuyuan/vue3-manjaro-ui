@@ -16,13 +16,14 @@ const rawSvgPlugin:Plugin = {
   },
 }
 
-// Todo: How dose vite readfile?
+// Todo: How to use fs in vite?
 const filesystemPlugin:Plugin = {
   name: 'get-file-system-dirs',
   transform(ipt: string, filepath: string) {
-    if (basename(filepath) === 'get-dolphin-filesystem.ts') {
+    // shim filesystem.ts
+    if (basename(filepath) === 'filesystem.ts') {
       return {
-        code: dataToEsm(dolphinFiles)
+        code: dataToEsm({dolphinFiles})
       }
     }
   },

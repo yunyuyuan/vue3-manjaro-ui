@@ -5,8 +5,6 @@ import './assets/style/index.scss'
 import "@fontsource/noto-sans"
 import "@fontsource/source-code-pro"
 
-import VMdEditor from './utils/gedit'
-
 import IconSvg from "./assets/svg/IconSvg.vue";
 import apps from "./utils/apps";
 
@@ -15,5 +13,4 @@ createApp(App)
     .provide('apps', apps)
     .provide('lock', ref(process.env.NODE_ENV !== 'development'))
     .provide('power', ref(''))
-    .use(VMdEditor)
     .mount('#app')

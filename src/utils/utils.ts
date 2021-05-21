@@ -1,6 +1,5 @@
 import {typeApp} from "./apps";
-import {typeFile} from "../../filesystem";
-import dolphinFiles from "../../get-dolphin-filesystem";
+import {typeFile, dolphinFiles} from "../../filesystem";
 
 export function escapeHtml(s: string): string{
     return s.replaceAll('<', '&lt;')

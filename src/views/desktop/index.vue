@@ -55,8 +55,8 @@ section{
   overflow: hidden;
   >img{
     object-fit: cover;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     user-select: none;
     pointer-events: none;
     position: absolute;

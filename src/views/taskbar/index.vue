@@ -169,6 +169,16 @@ section{
   >.apps{
     height: 100%;
   }
+  .app{
+    :deep(>svg){
+      transition: all .15s linear;
+    }
+    &:hover{
+      :deep(>svg) {
+        filter: saturate(4);
+      }
+    }
+  }
   >.pendant{
     margin-left: auto;
     height: 100%;

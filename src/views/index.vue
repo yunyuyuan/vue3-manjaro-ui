@@ -1,7 +1,7 @@
 <template>
   <img @dragstart="" :src="wallpaper" alt="wallpaper"/>
   <cmd-msg v-if="power!==''" />
-  <lock-screen v-else-if="lock"/>
+  <lock-screen :show="power===''&&lock"/>
   <desktop v-show="power===''&&!lock" />
   <taskbar v-show="power===''&&!lock"/>
 </template>
@@ -36,8 +36,8 @@ img{
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   object-fit: cover;
   user-select: none;
   pointer-events: none;
