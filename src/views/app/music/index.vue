@@ -101,7 +101,7 @@ export default defineComponent({
       }
       return 'media-pause'
     },
-    audio (){
+    audio (): HTMLAudioElement{
       return this.$el.querySelector('audio')
     }
   },

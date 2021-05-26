@@ -33,6 +33,7 @@
 - [x] Image viewer
 - [x] Music player
 - [ ] Video player
+- [ ] white/dark mode
 - [ ] Office
 - [ ] KCalc(calculator of manjaro)
 - [ ] improving gedit
@@ -48,7 +49,6 @@
 * [color-calendar](https://github.com/yunyuyuan/color-calendar)
 * [viewerjs](https://github.com/fengyuanchen/viewerjs)
 * iframe: [github1s](https://github1s.com)
-* iframe: [vue-netease-music](https://github.com/sl1673495/vue-netease-music)
 * And more...
 
 ### LICENCE

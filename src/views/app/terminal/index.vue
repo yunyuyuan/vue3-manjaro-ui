@@ -60,6 +60,12 @@ export default defineComponent({
       }
       return parent;
     },
+    dirsNow (): Array<typeFile>{
+      return this.filesNow.filter(v=>v.isDir);
+    },
+    notDirsNow (): Array<typeFile>{
+      return this.filesNow.filter(v=>!v.isDir);
+    },
     dirStr (): string{
       return this.dir.length?this.dir.join('/'):'~'
     }
@@ -115,29 +121,34 @@ export default defineComponent({
           break
         case "cd":
           this.pushCmd(this.input);
-          const dir = this.cmdLis[1];
-          // Todo: support '/'
-          if (dir.includes('/')){
-            this.cmds.push(['out', 'No support for multiple dir currently'])
-            break
-          }
-          switch (dir){
-            case undefined:
-              this.dir = []
+          if (this.cmdLis.length > 2){
+            this.cmds.push(['out', 'command "cd" only take one argument'])
+          }else {
+            const dir = this.cmdLis[1];
+            // Todo: support '/'
+            if (dir && dir.includes('/')) {
+              this.cmds.push(['out', 'No support for multiple dir currently'])
               break
-            case '..':
-              if (this.dir.length>0)
-              this.dir.pop()
-              break
-            case '.':
-              break
-            default:
-              if (this.filesNow.find(v=>v.name===dir)){
-                this.dir.push(dir)
-              }else{
-                this.cmds.push(['out', 'Unknown folder: '+dir])
-              }
-              break
+            }
+            switch (dir) {
+              case undefined:
+              case '~':
+                this.dir = []
+                break
+              case '..':
+                if (this.dir.length > 0)
+                  this.dir.pop()
+                break
+              case '.':
+                break
+              default:
+                if (this.dirsNow.find(v => v.name === dir)) {
+                  this.dir.push(dir)
+                } else {
+                  this.cmds.push(['out', 'Unknown folder: ' + dir])
+                }
+                break
+            }
           }
           break
         case "clear":
@@ -158,19 +169,29 @@ export default defineComponent({
           break
         case "xdg-open":
           this.pushCmd(this.input)
-          if (this.cmdLis.length === 2 && this.cmdLis[1]){
-            const file = this.filesNow.find(v => !v.isDir && v.name === this.cmdLis[1]);
-            if (file) {
-              switch (file.mime){
-                case 'text/markdown':
-                  openApp.call(this, 'gedit').params.filepath.value = this.dir.concat([file.name]).join('/');
-                  break
-                case 'audio/mpeg':
-                  openApp.call(this, 'music').params.filepath.value = this.dir.concat([file.name]).join('/');
-                  break
+          if (this.cmdLis.length > 2){
+            this.cmds.push(['out', 'command "xdg-open" only take one argument'])
+          }else {
+            if (this.cmdLis[1]) {
+              const file = this.filesNow.find(v => !v.isDir && v.name === this.cmdLis[1]);
+              if (file) {
+                const mime1 = file.mime.split('/')[0];
+                switch (file.mime) {
+                  case 'text/markdown':
+                    openApp.call(this, 'gedit').params.filepath.value = this.dir.concat([file.name]).join('/');
+                    break
+                  case 'audio/mpeg':
+                    openApp.call(this, 'music').params.filepath.value = this.dir.concat([file.name]).join('/');
+                    break
+                  default:
+                    if (mime1 === 'image') {
+                      openApp.call(this, 'image viewer').params.filepath.value = this.dir.concat([file.name]).join('/');
+                    }
+                    break
+                }
+              } else {
+                this.cmds.push(['out', 'No such file: "' + this.cmdLis[1] + '"'])
               }
-            }else{
-              this.cmds.push(['out', 'No such file: "'+this.cmdLis[1]+'"'])
             }
           }
           break;
@@ -187,32 +208,82 @@ export default defineComponent({
         this.pushCmd('')
         this.cmds.push(['out', 'type "help" to see helps'])
         this.input = ''
-      }else if (this.cmdLis.length > 1){
-        return
-      } else if(command === 'c') {
-        this.pushCmd('')
-        this.cmds.push(['out', 'cd\tclear'])
-      }else if(command === 'p'){
-        this.pushCmd('')
-        this.cmds.push(['out', 'poweroff\tpwd'])
-      }
-
-      else if(['h', 'he', 'hel', 'help'].includes(command)){
-        this.input = 'help '
-      }else if(['l', 'ls'].includes(command)){
-        this.input = 'ls '
-      }else if(['cl', 'cle', 'clea', 'clear'].includes(command)){
-        this.input = 'clear '
-      }else if(['pw', 'pwd'].includes(command)){
-        this.input = 'pwd '
       }else if(command==='cd'){
-        this.input = 'cd '
-      }else if(['r', 're', 'reb', 'rebo', 'reboo', 'reboot'].includes(command)){
-        this.input = 'reboot '
-      }else if(['po', 'pow', 'powe', 'power', 'powero', 'powerof', 'poweroff'].includes(command)){
-        this.input = 'poweroff '
-      }else if(['x', 'xd', 'xdg', 'xdg-', 'xdg-o', 'xdg-op', 'xdg-ope', 'xdg-open'].includes(command)){
-        this.input = 'xdg-open ';
+        const needComplete = this.cmdLis[1];
+        const dirs = [];
+        if (needComplete){
+          for (const d of this.dirsNow){
+            if (d.name.length >= needComplete.length && d.name.startsWith(needComplete)){
+              dirs.push(d.name);
+            }
+          }
+        }else{
+          dirs.push(...this.dirsNow.map(v=>v.name));
+        }
+        if (dirs.length > 0){
+          if (dirs.length === 1){
+            this.input = 'cd '+dirs[0]
+          }else{
+            this.pushCmd(this.input)
+            this.cmds.push(['out', dirs.join('\t')])
+          }
+        }
+      } else if(command==='xdg-open'){
+        const needComplete = this.cmdLis[1];
+        const dirs = [];
+        if (needComplete){
+          for (const d of this.notDirsNow){
+            if (d.name.length >= needComplete.length && d.name.startsWith(needComplete)){
+              dirs.push(d.name);
+            }
+          }
+        }else{
+          dirs.push(...this.notDirsNow.map(v=>v.name));
+        }
+        if (dirs.length > 0){
+          if (dirs.length === 1){
+            this.input = 'xdg-open '+dirs[0]
+          }else{
+            this.pushCmd(this.input)
+            this.cmds.push(['out', dirs.join('\t')])
+          }
+        }
+      } else if (this.cmdLis.length === 1){
+        if(command === 'c') {
+          this.pushCmd('')
+          this.cmds.push(['out', 'cd\tclear'])
+        }else if(command === 'p'){
+          this.pushCmd('')
+          this.cmds.push(['out', 'poweroff\tpwd'])
+        }
+
+        else if(['h', 'he', 'hel', 'help'].includes(command)){
+          this.input = 'help ';
+        }else if(['l', 'ls'].includes(command)){
+          this.input = 'ls ';
+        }else if(['cl', 'cle', 'clea', 'clear'].includes(command)){
+          this.input = 'clear ';
+        }else if(['pw', 'pwd'].includes(command)){
+          this.input = 'pwd ';
+        }else if(command==='cd'){
+          const needComplete = this.cmdLis[1];
+          console.log(needComplete)
+          if (needComplete){
+            const dirs = [];
+            for (const d of this.dirsNow){
+              if (d.name.length >= needComplete && d.name.startsWith(needComplete)){
+                dirs.push(d.name);
+              }
+            }
+            console.log(dirs);
+          }
+        }else if(['r', 're', 'reb', 'rebo', 'reboo', 'reboot'].includes(command)){
+          this.input = 'reboot ';
+        }else if(['po', 'pow', 'powe', 'power', 'powero', 'powerof', 'poweroff'].includes(command)){
+          this.input = 'poweroff ';
+        } else if(['x', 'xd', 'xdg', 'xdg-', 'xdg-o', 'xdg-op', 'xdg-ope', 'xdg-open'].includes(command)){
+          this.input = 'xdg-open ';
+        }
       }
     },
     upCmd (){

@@ -285,7 +285,7 @@ export default defineComponent({
   left: 0;
   opacity: 1;
   &.top >div{
-    box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+    box-shadow: 0 0 .8rem rgba(0, 0, 0, .6);
     >.head:before{
       color: white;
     }
@@ -298,6 +298,7 @@ export default defineComponent({
   >div {
     width: 100%;
     height: 100%;
+    box-shadow: 0 0 .4rem rgba(0, 0, 0, .6);
     .head {
       width: 100%;
       height: 1.6rem;

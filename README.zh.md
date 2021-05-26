@@ -33,6 +33,7 @@
 - [x] 图片查看器
 - [x] 音乐播放器
 - [ ] 视频播放器
+- [ ] 亮/暗 模式
 - [ ] Office
 - [ ] KCalc(manjaro的计算器)
 - [ ] 优化gedit
@@ -48,7 +49,6 @@
 * [color-calendar](https://github.com/yunyuyuan/color-calendar)
 * [viewerjs](https://github.com/fengyuanchen/viewerjs)
 * iframe: [github1s](https://github1s.com)
-* iframe: [vue-netease-music](https://github.com/sl1673495/vue-netease-music)
 * 以及其它的项目...
 
 ### 许可
