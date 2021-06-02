@@ -54,9 +54,7 @@ export default defineComponent({
   },
   methods: {
     windowResize (){
-      if (this.viewer){
-        this.viewer.updateSize();
-      }
+      this.viewer?.updateSize();
     },
     calcSrc (img: string){
       return `/dolphin-files/${img}`

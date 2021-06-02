@@ -1,14 +1,14 @@
 <template>
   <section>
-    <img @dragstart="" :src="wallpaper" alt="wallpaper"/>
-    <window v-for="app in apps" @resize="proxyResize('app-'+app.name, $event)" @move="proxyMove('app-'+app.name, $event)" class="app" v-show="app.status.value > 0" :app="app">
+    <img draggable="false" :src="wallpaper" alt="wallpaper"/>
+    <window v-for="app in apps" @resize="proxyResize('app-'+app.name)" @move="proxyMove('app-'+app.name, $event)" class="app" v-show="app.status.value > 0" :app="app">
       <component :ref="'app-'+app.name" :is="app.app" v-if="app.status.value > 0"></component>
     </window>
   </section>
 </template>
 
 <script lang="ts">
-import {defineComponent, resolveDynamicComponent, inject} from 'vue';
+import {defineComponent, inject} from 'vue';
 import wallpaper from "../../assets/images/wallpaper.png";
 import Window from "../../components/window.vue";
 import {typeApp} from "../../utils/apps";
@@ -26,16 +26,10 @@ export default defineComponent({
       apps: inject('apps') as Array<typeApp>,
     }
   },
-  render () {
-    console.log('render')
-    this.apps.forEach(app=>{
-      console.log(resolveDynamicComponent(app.app));
-    })
-  },
   methods: {
-    proxyResize(app, e){
+    proxyResize(app){
       if (this.$refs[app]&&this.$refs[app].windowResize){
-        this.$refs[app].windowResize(e)
+        this.$refs[app].windowResize()
       }
     },
     proxyMove(app, e){

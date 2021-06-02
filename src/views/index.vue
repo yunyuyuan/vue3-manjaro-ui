@@ -1,5 +1,5 @@
 <template>
-  <img @dragstart="" :src="wallpaper" alt="wallpaper"/>
+  <img draggable="false" :src="wallpaper" alt="wallpaper"/>
   <cmd-msg v-if="power!==''" />
   <lock-screen :show="power===''&&lock"/>
   <desktop v-show="power===''&&!lock" />

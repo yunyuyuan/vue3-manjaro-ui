@@ -317,6 +317,7 @@ export default defineComponent({
   background: #1e2229;
   font-size: .75rem;
   color: white;
+  padding-bottom: .6rem;
   >p{
     padding: .5rem;
     font-size: .8rem;
