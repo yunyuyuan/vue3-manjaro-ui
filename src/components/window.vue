@@ -204,14 +204,14 @@ export default defineComponent({
           sizeDelta[0] = -e.screenX + this.prevPos[0];
         }else{
           posDelta[0] = 0;
-          sizeDelta[0] = 0;
+          sizeDelta[0] = e.screenX - this.prevPos[0];
         }
         if (this.resizeY === -1){
           posDelta[1] = e.screenY - this.prevPos[1];
           sizeDelta[1] = -e.screenY + this.prevPos[1];
         }else {
           posDelta[1] = 0;
-          sizeDelta[1] = 0;
+          sizeDelta[1] = e.screenY - this.prevPos[1];
         }
         if (this.doResize(sizeDelta)){
           this.doMove(posDelta);
