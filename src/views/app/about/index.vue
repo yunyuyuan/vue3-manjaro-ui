@@ -3,7 +3,7 @@
     <p>For learning Vue3 and Vite,I wrote this project.</p>
     <div>
       <b>Author:</b>
-      <img src="https://blog.halberd.cn/image/i.png" alt="avatar"/>
+      <img src="https://blog.halberd.cn/favicon.jpg" alt="avatar"/>
       <a target="_blank" href="https://github.com/yunyuyuan">yunyuyuan</a>
     </div>
     <div>
